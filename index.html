@@ -309,11 +309,11 @@
     <div class="bottom-bar">
         <div class="bottom-inner">
             <button class="arrow-btn" id="nextBtn" aria-label="עמוד הבא">
-                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
             <div class="page-dots" id="pageDots"></div>
             <button class="arrow-btn" id="prevBtn" aria-label="עמוד קודם">
-                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
         </div>
     </div>
@@ -395,10 +395,17 @@
             });
         }
 
-        // === CLICK ON PAGE = NEXT PAGE ===
+        // === CLICK ON PAGE: right half = next, left half = prev ===
         viewEls.forEach(function(el) {
-            el.addEventListener('click', function() {
-                if (!didDrag) flipView(1);
+            el.addEventListener('click', function(e) {
+                if (didDrag) return;
+                var rect = viewport.getBoundingClientRect();
+                var clickX = e.clientX - rect.left;
+                if (clickX > rect.width / 2) {
+                    flipView(1);  // right side = next
+                } else {
+                    flipView(-1); // left side = prev
+                }
             });
         });
 
