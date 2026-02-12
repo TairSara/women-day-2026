@@ -91,7 +91,8 @@
         .book-viewport {
             position: fixed; top: 62px; left: 0; right: 0; bottom: 56px;
             overflow: hidden; background: #f0f0f0;
-            perspective: 2000px;
+            perspective: 1800px;
+            perspective-origin: 50% 50%;
         }
 
         /* ===== VIEW ===== */
@@ -102,25 +103,45 @@
             will-change: transform, opacity;
             backface-visibility: hidden; -webkit-backface-visibility: hidden;
             pointer-events: none; opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1),
-                        opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+            transform-origin: right center;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow 0.7s ease;
             cursor: pointer;
         }
         .book-view.no-transition { transition: none !important; }
 
-        /* Hebrew book: next pages are under (left), turned pages go right */
+        /* Current page */
         .book-view.pos-center {
-            transform: translateX(0) scale(1);
+            transform: translateX(0) rotateY(0deg) scale(1);
             opacity: 1; z-index: 2; pointer-events: all;
+            box-shadow: 0 0 0 rgba(0,0,0,0);
         }
+        /* Upcoming pages: waiting on the RIGHT, slightly behind */
         .book-view.pos-next {
-            transform: translateX(-20%) scale(0.93);
+            transform: translateX(25%) scale(0.92);
             opacity: 0; z-index: 1;
+            transform-origin: left center;
         }
+        /* Turned pages: flipped away to the LEFT with 3D rotation */
         .book-view.pos-prev {
-            transform: translateX(100%) rotateY(-18deg);
+            transform: translateX(-100%) rotateY(25deg) scale(0.95);
             opacity: 0; z-index: 3;
+            transform-origin: right center;
+            box-shadow: -15px 0 40px rgba(0,0,0,0.15);
         }
+
+        /* ===== PAGE SHADOW EFFECT ===== */
+        .book-view::after {
+            content: '';
+            position: absolute; inset: 0;
+            pointer-events: none; z-index: 20;
+            background: linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.04) 100%);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+        .book-view.pos-center::after { opacity: 1; }
 
         /* ===== SINGLE PAGE ===== */
         .view-single {
@@ -135,43 +156,12 @@
         .view-single .page-card img {
             max-height: 100%; max-width: 100%;
             width: auto; height: auto; object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 6px 40px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.12),
+                        0 1px 4px rgba(0,0,0,0.06),
+                        inset 0 0 0 1px rgba(0,0,0,0.04);
             display: block;
             user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
-        }
-
-        /* ===== PAGE FOLD on Cover ===== */
-        .page-fold {
-            position: absolute;
-            bottom: 18px; left: 18px;
-            width: 60px; height: 60px;
-            z-index: 15;
-            cursor: pointer;
-        }
-        .page-fold::before {
-            content: '';
-            position: absolute; bottom: 0; left: 0;
-            width: 60px; height: 60px;
-            background: linear-gradient(135deg, transparent 50%, rgba(26,107,74,0.12) 50%);
-            border-radius: 0 0 0 8px;
-            box-shadow: -2px 2px 6px rgba(0,0,0,0.1);
-        }
-        .page-fold-arrow {
-            position: absolute;
-            bottom: 10px; left: 10px;
-            width: 28px; height: 28px;
-            animation: arrowPulse 1.2s ease-in-out infinite;
-        }
-        .page-fold-arrow svg {
-            width: 100%; height: 100%;
-            stroke: #1a6b4a; fill: none;
-            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
-        }
-        @keyframes arrowPulse {
-            0%, 100% { opacity: 0.5; transform: translate(0, 0); }
-            50% { opacity: 1; transform: translate(-3px, 3px); }
         }
 
         /* ===== IMAGE LOADING ===== */
@@ -232,9 +222,6 @@
             .bottom-bar { height: 50px; padding: 0 14px; }
             .arrow-btn { width: 40px; height: 40px; }
             .menu-panel { width: 280px; }
-            .page-fold { width: 50px; height: 50px; }
-            .page-fold::before { width: 50px; height: 50px; }
-            .page-fold-arrow { bottom: 8px; left: 8px; width: 24px; height: 24px; }
         }
     </style>
 </head>
@@ -296,15 +283,6 @@
                     <img src="Page1.webp" alt="שער - יום האישה 2026" draggable="false">
                 </div>
             </div>
-            <!-- Page fold with blinking arrow -->
-            <div class="page-fold" id="pageFold">
-                <div class="page-fold-arrow">
-                    <svg viewBox="0 0 24 24">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                        <line x1="9" y1="18" x2="3" y2="24"></line>
-                    </svg>
-                </div>
-            </div>
         </div>
 
         <!-- Page 2 -->
@@ -363,7 +341,6 @@
         var mPanel = document.getElementById('menuPanel');
         var hBtn = document.getElementById('hamburgerBtn');
         var mItems = document.querySelectorAll('.menu-page-item');
-        var pageFold = document.getElementById('pageFold');
 
         // === IMAGE LOADING ===
         document.querySelectorAll('.page-card img').forEach(function(img) {
@@ -387,13 +364,9 @@
             viewEls.forEach(function(el, i) {
                 el.classList.remove('pos-center', 'pos-next', 'pos-prev');
                 if (i === cur) el.classList.add('pos-center');
-                else if (i > cur) el.classList.add('pos-next');
-                else el.classList.add('pos-prev');
+                else if (i > cur) el.classList.add('pos-next');   // upcoming: waiting on right
+                else el.classList.add('pos-prev');                 // turned: gone to left
             });
-            // Show/hide page fold on cover
-            if (pageFold) {
-                pageFold.style.display = (cur === 0) ? 'block' : 'none';
-            }
         }
 
         // === NAVIGATE ===
@@ -403,7 +376,7 @@
             cur = index;
             positionViews();
             updateUI();
-            setTimeout(function() { busy = false; }, 650);
+            setTimeout(function() { busy = false; }, 750);
         }
 
         function flipView(dir) { goToView(cur + dir); }
@@ -424,13 +397,8 @@
 
         // === CLICK ON PAGE = NEXT PAGE ===
         viewEls.forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                // Don't trigger on drag or if clicking fold arrow
-                if (e.target.closest('.page-fold')) {
-                    flipView(1);
-                    return;
-                }
-                flipView(1);
+            el.addEventListener('click', function() {
+                if (!didDrag) flipView(1);
             });
         });
 
@@ -455,7 +423,8 @@
             });
         });
 
-        // === TOUCH SWIPE (Hebrew: swipe RIGHT = forward) ===
+        // === TOUCH SWIPE ===
+        // Direction: swipe LEFT = forward (page turns left, new page from right)
         var tx0, ty0, tdx, swiping, t0;
 
         viewport.addEventListener('touchstart', function(e) {
@@ -479,32 +448,38 @@
 
             var pct = (tdx / viewport.offsetWidth) * 100;
             var cv = viewEls[cur];
-            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (-pct * 0.1) + 'deg)';
-            cv.style.opacity = String(Math.max(0.2, 1 - Math.abs(pct) * 0.008));
 
-            if (tdx > 0 && cur < totalViews - 1) {
+            // Current page follows finger with 3D rotation
+            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (pct * 0.15) + 'deg) scale(' + (1 - Math.abs(pct) * 0.0005) + ')';
+            cv.style.opacity = String(Math.max(0.15, 1 - Math.abs(pct) * 0.01));
+            cv.style.boxShadow = Math.abs(pct) > 5 ? (pct < 0 ? '-' : '') + '12px 0 35px rgba(0,0,0,' + (Math.min(Math.abs(pct) * 0.003, 0.2)) + ')' : 'none';
+
+            // Swipe left (forward): reveal next page from right
+            if (tdx < 0 && cur < totalViews - 1) {
                 var nv = viewEls[cur + 1];
-                var p = Math.min(pct / 100, 1);
-                nv.style.transform = 'translateX(' + (-20 + 20 * p) + '%) scale(' + (0.93 + 0.07 * p) + ')';
-                nv.style.opacity = String(p);
-            } else if (tdx < 0 && cur > 0) {
+                var p = Math.min(Math.abs(pct) / 100, 1);
+                nv.style.transform = 'translateX(' + (25 - 25 * p) + '%) scale(' + (0.92 + 0.08 * p) + ')';
+                nv.style.opacity = String(Math.min(p * 1.5, 1));
+            }
+            // Swipe right (backward): bring prev page back from left
+            else if (tdx > 0 && cur > 0) {
                 var pv = viewEls[cur - 1];
                 var p2 = Math.min(Math.abs(pct) / 100, 1);
-                pv.style.transform = 'translateX(' + (100 - 100 * p2) + '%) rotateY(' + (-18 + 18 * p2) + 'deg)';
-                pv.style.opacity = String(p2);
+                pv.style.transform = 'translateX(' + (-100 + 100 * p2) + '%) rotateY(' + (25 - 25 * p2) + 'deg) scale(' + (0.95 + 0.05 * p2) + ')';
+                pv.style.opacity = String(Math.min(p2 * 1.5, 1));
             }
         }, { passive: false });
 
         viewport.addEventListener('touchend', function() {
             viewEls.forEach(function(v) {
                 v.classList.remove('no-transition');
-                v.style.transform = ''; v.style.opacity = '';
+                v.style.transform = ''; v.style.opacity = ''; v.style.boxShadow = '';
             });
             if (!swiping) return;
             var vel = Math.abs(tdx) / (Date.now() - t0);
             var thr = vel > 0.3 ? 30 : viewport.offsetWidth * 0.2;
-            if (tdx > thr && cur < totalViews - 1) goToView(cur + 1);
-            else if (tdx < -thr && cur > 0) goToView(cur - 1);
+            if (tdx < -thr && cur < totalViews - 1) goToView(cur + 1);       // swipe left = forward
+            else if (tdx > thr && cur > 0) goToView(cur - 1);                 // swipe right = backward
             else positionViews();
         }, { passive: true });
 
@@ -526,19 +501,21 @@
 
             var pct = (mdx / viewport.offsetWidth) * 100;
             var cv = viewEls[cur];
-            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (-pct * 0.1) + 'deg)';
-            cv.style.opacity = String(Math.max(0.2, 1 - Math.abs(pct) * 0.008));
 
-            if (mdx > 0 && cur < totalViews - 1) {
+            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (pct * 0.15) + 'deg) scale(' + (1 - Math.abs(pct) * 0.0005) + ')';
+            cv.style.opacity = String(Math.max(0.15, 1 - Math.abs(pct) * 0.01));
+            cv.style.boxShadow = Math.abs(pct) > 5 ? (pct < 0 ? '-' : '') + '12px 0 35px rgba(0,0,0,' + (Math.min(Math.abs(pct) * 0.003, 0.2)) + ')' : 'none';
+
+            if (mdx < 0 && cur < totalViews - 1) {
                 var nv = viewEls[cur + 1];
-                var p = Math.min(pct / 100, 1);
-                nv.style.transform = 'translateX(' + (-20 + 20 * p) + '%) scale(' + (0.93 + 0.07 * p) + ')';
-                nv.style.opacity = String(p);
-            } else if (mdx < 0 && cur > 0) {
+                var p = Math.min(Math.abs(pct) / 100, 1);
+                nv.style.transform = 'translateX(' + (25 - 25 * p) + '%) scale(' + (0.92 + 0.08 * p) + ')';
+                nv.style.opacity = String(Math.min(p * 1.5, 1));
+            } else if (mdx > 0 && cur > 0) {
                 var pv = viewEls[cur - 1];
                 var p2 = Math.min(Math.abs(pct) / 100, 1);
-                pv.style.transform = 'translateX(' + (100 - 100 * p2) + '%) rotateY(' + (-18 + 18 * p2) + 'deg)';
-                pv.style.opacity = String(p2);
+                pv.style.transform = 'translateX(' + (-100 + 100 * p2) + '%) rotateY(' + (25 - 25 * p2) + 'deg) scale(' + (0.95 + 0.05 * p2) + ')';
+                pv.style.opacity = String(Math.min(p2 * 1.5, 1));
             }
         });
 
@@ -546,20 +523,21 @@
             if (!mDown) return;
             mDown = false; viewport.style.cursor = '';
             viewEls.forEach(function(v) {
-                v.classList.remove('no-transition'); v.style.transform = ''; v.style.opacity = '';
+                v.classList.remove('no-transition'); v.style.transform = ''; v.style.opacity = ''; v.style.boxShadow = '';
             });
             if (!didDrag) return;
             var thr = viewport.offsetWidth * 0.15;
-            if (mdx > thr && cur < totalViews - 1) goToView(cur + 1);
-            else if (mdx < -thr && cur > 0) goToView(cur - 1);
+            if (mdx < -thr && cur < totalViews - 1) goToView(cur + 1);
+            else if (mdx > thr && cur > 0) goToView(cur - 1);
             else positionViews();
+            setTimeout(function() { didDrag = false; }, 50);
         });
 
-        // === KEYBOARD (Hebrew: Right=forward, Left=backward) ===
+        // === KEYBOARD (Left=forward, Right=backward for this direction) ===
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && mPanel.classList.contains('open')) closeMenu();
-            if (e.key === 'ArrowRight') flipView(1);
-            if (e.key === 'ArrowLeft') flipView(-1);
+            if (e.key === 'ArrowLeft') flipView(1);
+            if (e.key === 'ArrowRight') flipView(-1);
         });
 
         // === INIT ===
