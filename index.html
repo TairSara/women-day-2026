@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
     <title>אלטשולר שחם | קטלוג יום האישה 2026</title>
+    <script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; overflow: hidden; -webkit-tap-highlight-color: transparent; }
@@ -15,8 +16,7 @@
 
         /* ===== NAV ===== */
         .nav-bar {
-            position: fixed; top: 0; left: 0; right: 0;
-            z-index: 1000; height: 62px;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 62px;
             background: rgba(255,255,255,0.97);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -38,9 +38,8 @@
         }
         .hamburger:hover { background: rgba(26,107,74,0.06); }
         .hamburger span {
-            display: block; width: 24px; height: 2.5px;
-            background: #1a6b4a; border-radius: 2px;
-            transition: all 0.3s ease; transform-origin: center;
+            display: block; width: 24px; height: 2.5px; background: #1a6b4a;
+            border-radius: 2px; transition: all 0.3s ease; transform-origin: center;
         }
         .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -49,8 +48,7 @@
         /* ===== SIDE MENU ===== */
         .menu-overlay {
             position: fixed; inset: 0; z-index: 1500;
-            background: rgba(0,0,0,0.35);
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            background: rgba(0,0,0,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .menu-overlay.open { opacity: 1; pointer-events: all; }
         .menu-panel {
@@ -68,121 +66,52 @@
         }
         .menu-header img { height: 72px; width: auto; }
         .menu-header-text h2 { font-size: 16px; font-weight: 700; color: #1a6b4a; }
-        .menu-header-text p { font-size: 12px; color: #999; margin-top: 2px; }
-        .menu-pages { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+        .menu-header-text p  { font-size: 12px; color: #999; margin-top: 2px; }
+        .menu-pages { padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+        .menu-section-label {
+            font-size: 10px; font-weight: 700; color: #1a6b4a;
+            letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 4px 4px;
+        }
         .menu-page-item {
             display: flex; align-items: center; gap: 14px;
-            padding: 12px 14px; border-radius: 12px;
-            border: 1.5px solid transparent;
-            cursor: pointer; transition: all 0.2s; background: #fafafa;
+            padding: 10px 12px; border-radius: 12px;
+            border: 1.5px solid transparent; cursor: pointer; transition: all 0.2s; background: #fafafa;
         }
-        .menu-page-item:hover { background: rgba(26,107,74,0.04); border-color: rgba(26,107,74,0.15); }
+        .menu-page-item:hover  { background: rgba(26,107,74,0.04); border-color: rgba(26,107,74,0.15); }
         .menu-page-item.active { background: rgba(26,107,74,0.06); border-color: #1a6b4a; }
         .menu-page-thumb {
-            width: 52px; height: 70px; border-radius: 6px;
+            width: 44px; height: 60px; border-radius: 6px;
             overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .menu-page-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .menu-page-info .page-name { font-size: 15px; font-weight: 600; color: #2c2c2c; }
+        .menu-page-info .page-name   { font-size: 14px; font-weight: 600; color: #2c2c2c; }
         .menu-page-item.active .page-name { color: #1a6b4a; }
-        .menu-page-info .page-number { font-size: 12px; color: #aaa; margin-top: 2px; }
+        .menu-page-info .page-number { font-size: 11px; color: #bbb; margin-top: 2px; }
 
         /* ===== BOOK VIEWPORT ===== */
         .book-viewport {
             position: fixed; top: 62px; left: 0; right: 0; bottom: 56px;
             overflow: hidden; background: #f0f0f0;
-            perspective: 1800px;
-            perspective-origin: 50% 50%;
-        }
-
-        /* ===== VIEW ===== */
-        .book-view {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            padding: 12px;
-            will-change: transform, opacity;
-            backface-visibility: hidden; -webkit-backface-visibility: hidden;
-            pointer-events: none; opacity: 0;
-            transform-origin: right center;
-            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        box-shadow 0.7s ease;
-            cursor: pointer;
-        }
-        .book-view.no-transition { transition: none !important; }
-
-        /* Current page */
-        .book-view.pos-center {
-            transform: translateX(0) rotateY(0deg) scale(1);
-            opacity: 1; z-index: 2; pointer-events: all;
-            box-shadow: 0 0 0 rgba(0,0,0,0);
-        }
-        /* Upcoming pages: waiting on the RIGHT, slightly behind */
-        .book-view.pos-next {
-            transform: translateX(25%) scale(0.92);
-            opacity: 0; z-index: 1;
-            transform-origin: left center;
-        }
-        /* Turned pages: flipped away to the LEFT with 3D rotation */
-        .book-view.pos-prev {
-            transform: translateX(-100%) rotateY(25deg) scale(0.95);
-            opacity: 0; z-index: 3;
-            transform-origin: right center;
-            box-shadow: -15px 0 40px rgba(0,0,0,0.15);
-        }
-
-        /* ===== PAGE SHADOW EFFECT ===== */
-        .book-view::after {
-            content: '';
-            position: absolute; inset: 0;
-            pointer-events: none; z-index: 20;
-            background: linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.04) 100%);
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.7s ease;
-        }
-        .book-view.pos-center::after { opacity: 1; }
-
-        /* ===== SINGLE PAGE ===== */
-        .view-single {
-            height: 100%; width: 100%;
             display: flex; align-items: center; justify-content: center;
         }
-        .view-single .page-card {
-            height: 100%; display: flex;
-            align-items: center; justify-content: center;
-            position: relative;
-        }
-        .view-single .page-card img {
-            max-height: 100%; max-width: 100%;
-            width: auto; height: auto; object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.12),
-                        0 1px 4px rgba(0,0,0,0.06),
-                        inset 0 0 0 1px rgba(0,0,0,0.04);
-            display: block;
+
+        /* ===== SHARED PAGE CONTENT ===== */
+        .page-content { background: #fff; overflow: hidden; }
+        .page-content img {
+            width: 100%; height: 100%; object-fit: contain; display: block;
             user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+            background: #fff;
         }
 
-        /* ===== IMAGE LOADING ===== */
-        .page-card img { opacity: 0; transition: opacity 0.5s ease; }
-        .page-card img.loaded { opacity: 1; }
-        .page-card::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(135deg, #f5f5f5 25%, #eee 50%, #f5f5f5 75%);
-            background-size: 200% 200%; animation: shimmer 1.5s ease infinite;
-            border-radius: 8px; z-index: 1; transition: opacity 0.4s;
-        }
-        .page-card.img-loaded::before { opacity: 0; pointer-events: none; }
-        @keyframes shimmer {
-            0% { background-position: 200% 200%; }
-            100% { background-position: -200% -200%; }
-        }
+        /* ===== DESKTOP flipbook ===== */
+        #flipbook { position: relative; }
+
+        /* ===== MOBILE flipbook (portrait, hidden by default) ===== */
+        #mobileFlipbook { position: relative; display: none; }
 
         /* ===== BOTTOM BAR ===== */
         .bottom-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            z-index: 900; height: 56px;
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 900; height: 56px;
             background: rgba(255,255,255,0.97);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid rgba(0,0,0,0.06);
@@ -206,352 +135,431 @@
             width: 22px; height: 22px; stroke: #444; fill: none;
             stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
         }
-        .page-dots { display: flex; align-items: center; gap: 8px; }
+        .page-dots {
+            display: flex; align-items: center; gap: 6px;
+            flex-wrap: wrap; justify-content: center;
+        }
         .page-dot {
-            width: 8px; height: 8px; border-radius: 50%;
+            width: 7px; height: 7px; border-radius: 50%;
             background: #ddd; transition: all 0.3s; cursor: pointer;
         }
-        .page-dot.active { background: #1a6b4a; width: 24px; border-radius: 4px; }
+        .page-dot.active { background: #1a6b4a; width: 20px; border-radius: 4px; }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 600px) {
-            .nav-bar { height: 56px; }
-            .nav-logo-img { height: 100px; }
-            .book-viewport { top: 56px; bottom: 50px; }
-            .book-view { padding: 6px; }
-            .bottom-bar { height: 50px; padding: 0 14px; }
-            .arrow-btn { width: 40px; height: 40px; }
-            .menu-panel { width: 280px; }
+        /* ===== MOBILE overrides ===== */
+        @media (max-width: 768px) {
+            .nav-bar        { height: 56px; }
+            .nav-logo-img   { height: 100px; }
+            .book-viewport  { top: 56px; bottom: 50px; }
+            .bottom-bar     { height: 50px; padding: 0 14px; }
+            .arrow-btn      { width: 40px; height: 40px; }
+            .menu-panel     { width: 280px; }
+            #flipbook        { display: none !important; }
+            #mobileFlipbook  { display: block; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <button class="hamburger" id="hamburgerBtn" aria-label="תפריט">
-                <span></span><span></span><span></span>
-            </button>
-            <img src="logo.webp" alt="אלטשולר שחם" class="nav-logo-img">
-            <div class="nav-page-counter" id="navCounter"></div>
-        </div>
-    </nav>
+<!-- NAV -->
+<nav class="nav-bar">
+    <div class="nav-container">
+        <button class="hamburger" id="hamburgerBtn" aria-label="תפריט">
+            <span></span><span></span><span></span>
+        </button>
+        <img src="logo.webp" alt="אלטשולר שחם" class="nav-logo-img">
+        <div class="nav-page-counter" id="navCounter"></div>
+    </div>
+</nav>
 
-    <!-- MENU -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <div class="menu-panel" id="menuPanel">
-        <div class="menu-header">
-            <img src="logo.webp" alt="אלטשולר שחם">
-            <div class="menu-header-text">
-                <h2>יום האישה 2026</h2>
-                <p>זוכות לתשואות</p>
-            </div>
-        </div>
-        <div class="menu-pages">
-            <div class="menu-page-item" data-page="0">
-                <div class="menu-page-thumb"><img src="Page1.webp" alt="שער"></div>
-                <div class="menu-page-info">
-                    <div class="page-name">שער</div>
-                    <div class="page-number">עמוד 1</div>
-                </div>
-            </div>
-            <div class="menu-page-item" data-page="1">
-                <div class="menu-page-thumb"><img src="Page2.webp" alt="שרון פרידמן"></div>
-                <div class="menu-page-info">
-                    <div class="page-name">שרון פרידמן</div>
-                    <div class="page-number">עמוד 2</div>
-                </div>
-            </div>
-            <div class="menu-page-item" data-page="2">
-                <div class="menu-page-thumb"><img src="Page3.webp" alt="הסיפור שלי"></div>
-                <div class="menu-page-info">
-                    <div class="page-name">הסיפור של שרון פרידמן</div>
-                    <div class="page-number">עמוד 3</div>
-                </div>
-            </div>
+<!-- SIDE MENU -->
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="menu-panel" id="menuPanel">
+    <div class="menu-header">
+        <img src="logo.webp" alt="אלטשולר שחם">
+        <div class="menu-header-text">
+            <h2>יום האישה 2026</h2>
+            <p>זוכות לתשואות</p>
         </div>
     </div>
+    <div class="menu-pages">
 
-    <!-- === BOOK VIEWER === -->
-    <div class="book-viewport" id="bookViewport">
-
-        <!-- Page 1 (cover) -->
-        <div class="book-view" id="v-0">
-            <div class="view-single">
-                <div class="page-card">
-                    <img src="Page1.webp" alt="שער - יום האישה 2026" draggable="false">
-                </div>
-            </div>
+        <div class="menu-page-item" data-page="0">
+            <div class="menu-page-thumb"><img src="page1.webp" alt="שער"></div>
+            <div class="menu-page-info"><div class="page-name">שער</div><div class="page-number">עמוד 1</div></div>
         </div>
 
-        <!-- Page 2 -->
-        <div class="book-view" id="v-1">
-            <div class="view-single">
-                <div class="page-card">
-                    <img src="Page2.webp" alt="שרון פרידמן" draggable="false">
-                </div>
-            </div>
+        <div class="menu-section-label">שרון פרידמן</div>
+        <div class="menu-page-item" data-page="1">
+            <div class="menu-page-thumb"><img src="page2.webp" alt="שרון פרידמן"></div>
+            <div class="menu-page-info"><div class="page-name">שרון פרידמן</div><div class="page-number">עמוד 2</div></div>
+        </div>
+        <div class="menu-page-item" data-page="2">
+            <div class="menu-page-thumb"><img src="page3.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 3</div></div>
         </div>
 
-        <!-- Page 3 -->
-        <div class="book-view" id="v-2">
-            <div class="view-single">
-                <div class="page-card">
-                    <img src="Page3.webp" alt="הסיפור של שרון פרידמן" draggable="false">
-                </div>
-            </div>
+        <div class="menu-section-label">יפעת אשוש</div>
+        <div class="menu-page-item" data-page="3">
+            <div class="menu-page-thumb"><img src="page4.webp" alt="יפעת אשוש"></div>
+            <div class="menu-page-info"><div class="page-name">יפעת אשוש</div><div class="page-number">עמוד 4</div></div>
+        </div>
+        <div class="menu-page-item" data-page="4">
+            <div class="menu-page-thumb"><img src="page5.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 5</div></div>
+        </div>
+
+        <div class="menu-section-label">נוי אביטן ששון</div>
+        <div class="menu-page-item" data-page="5">
+            <div class="menu-page-thumb"><img src="page6.webp" alt="נוי אביטן ששון"></div>
+            <div class="menu-page-info"><div class="page-name">נוי אביטן ששון</div><div class="page-number">עמוד 6</div></div>
+        </div>
+        <div class="menu-page-item" data-page="6">
+            <div class="menu-page-thumb"><img src="page7.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 7</div></div>
+        </div>
+
+        <div class="menu-page-item" data-page="7">
+            <div class="menu-page-thumb"><img src="last.webp" alt="עמוד אחרון"></div>
+            <div class="menu-page-info"><div class="page-name">עמוד אחרון</div><div class="page-number">עמוד 8</div></div>
         </div>
 
     </div>
+</div>
 
-    <!-- BOTTOM BAR -->
-    <div class="bottom-bar">
-        <div class="bottom-inner">
-            <button class="arrow-btn" id="nextBtn" aria-label="עמוד הבא">
-                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
-            <div class="page-dots" id="pageDots"></div>
-            <button class="arrow-btn" id="prevBtn" aria-label="עמוד קודם">
-                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
-        </div>
+<!-- BOOK VIEWPORT -->
+<div class="book-viewport" id="bookViewport">
+
+    <!--
+      DESKTOP: reversed array + pairs swapped → correct RTL 2-page spread
+      All pages soft (no data-density="hard") → flip animation on every transition
+      incl. cover ↔ first spread, and last spread ↔ back cover.
+      idx: 0=last  1=page6  2=page7  3=page4  4=page5  5=page2  6=page3  7=page1(cover)
+      PAGE_MAP[user] = internal = [7,5,6,3,4,1,2,0]  (self-inverse)
+      flipPrev() = lower idx = user going FORWARD
+    -->
+    <div id="flipbook">
+        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
     </div>
 
-    <script>
-    (function() {
-        'use strict';
+    <!--
+      MOBILE: reversed array, simple order (no pairs swap) → portrait, 1 page at a time
+      All pages soft → flip animation on every transition incl. cover & back cover
+      idx: 0=last  1=page7  2=page6  3=page5  4=page4  5=page3  6=page2  7=page1(cover)
+      internalToUser(i) = 7 - i  (simple reversal)
+      flipPrev() = lower idx = user going FORWARD
+      Tap LEFT half  → forward  (next page)
+      Tap RIGHT half → backward (previous page)
+    -->
+    <div id="mobileFlipbook">
+        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
+    </div>
 
-        var totalViews = 3;
-        var cur = 0;
-        var busy = false;
+</div>
 
-        // DOM
-        var viewEls = [
-            document.getElementById('v-0'),
-            document.getElementById('v-1'),
-            document.getElementById('v-2')
-        ];
-        var viewport = document.getElementById('bookViewport');
-        var prevBtn = document.getElementById('prevBtn');
-        var nextBtn = document.getElementById('nextBtn');
-        var counter = document.getElementById('navCounter');
-        var dotsContainer = document.getElementById('pageDots');
-        var mOverlay = document.getElementById('menuOverlay');
-        var mPanel = document.getElementById('menuPanel');
-        var hBtn = document.getElementById('hamburgerBtn');
-        var mItems = document.querySelectorAll('.menu-page-item');
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+    <div class="bottom-inner">
+        <button class="arrow-btn" id="nextBtn" aria-label="עמוד הבא">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <div class="page-dots" id="pageDots"></div>
+        <button class="arrow-btn" id="prevBtn" aria-label="עמוד קודם">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+    </div>
+</div>
 
-        // === IMAGE LOADING ===
-        document.querySelectorAll('.page-card img').forEach(function(img) {
-            function done() { img.classList.add('loaded'); img.closest('.page-card').classList.add('img-loaded'); }
-            img.complete ? done() : img.addEventListener('load', done);
+<script>
+(function () {
+    'use strict';
+
+    /* ── DOM ── */
+    var viewport      = document.getElementById('bookViewport');
+    var desktopEl     = document.getElementById('flipbook');
+    var mobileEl      = document.getElementById('mobileFlipbook');
+    var prevBtn       = document.getElementById('prevBtn');
+    var nextBtn       = document.getElementById('nextBtn');
+    var counter       = document.getElementById('navCounter');
+    var dotsContainer = document.getElementById('pageDots');
+    var mOverlay      = document.getElementById('menuOverlay');
+    var mPanel        = document.getElementById('menuPanel');
+    var hBtn          = document.getElementById('hamburgerBtn');
+    var mItems        = document.querySelectorAll('.menu-page-item');
+
+    /* ── Constants ── */
+    var TOTAL = 8;
+    var LAST  = TOTAL - 1; // = 7
+
+    /*
+      Both desktop and mobile use reversed arrays (higher idx = cover).
+      flipPrev() = lower internal idx = user going FORWARD (Hebrew reading direction).
+      flipNext() = higher internal idx = user going BACKWARD.
+
+      Desktop page map (reversed + pairs swapped, self-inverse):
+        user:     0  1  2  3  4  5  6  7
+        internal: 7  5  6  3  4  1  2  0
+
+      Mobile page map (simple reversal):
+        user:     0  1  2  3  4  5  6  7
+        internal: 7  6  5  4  3  2  1  0
+        i.e. internalToUser(i) = 7 - i
+    */
+    var D_MAP = [7, 5, 6, 3, 4, 1, 2, 0]; // desktop (self-inverse)
+
+    function mU(i) { return LAST - i; }  // mobile: internal → user
+    function Um(u) { return LAST - u; }  // mobile: user → internal
+
+    /* ── State ── */
+    var currentPage = 0;
+    var desktopFlip = null;
+    var mobileFlip  = null;
+    var isMobile    = window.innerWidth <= 768;
+
+    /* ════════════════════════════════════════
+       SHARED UI
+    ════════════════════════════════════════ */
+
+    function updateUI(pg) {
+        currentPage = pg;
+        counter.textContent = (pg + 1) + ' / ' + TOTAL;
+        nextBtn.disabled = (pg >= LAST);
+        prevBtn.disabled = (pg <= 0);
+        dotsContainer.querySelectorAll('.page-dot').forEach(function (d, i) {
+            d.classList.toggle('active', i === pg);
         });
-
-        // === BUILD DOTS ===
-        for (var i = 0; i < totalViews; i++) {
-            var dot = document.createElement('div');
-            dot.className = 'page-dot';
-            dot.dataset.view = i;
-            dot.addEventListener('click', (function(idx) {
-                return function() { goToView(idx); };
-            })(i));
-            dotsContainer.appendChild(dot);
-        }
-
-        // === POSITION VIEWS ===
-        function positionViews() {
-            viewEls.forEach(function(el, i) {
-                el.classList.remove('pos-center', 'pos-next', 'pos-prev');
-                if (i === cur) el.classList.add('pos-center');
-                else if (i > cur) el.classList.add('pos-next');   // upcoming: waiting on right
-                else el.classList.add('pos-prev');                 // turned: gone to left
-            });
-        }
-
-        // === NAVIGATE ===
-        function goToView(index) {
-            if (index < 0 || index >= totalViews || index === cur || busy) return;
-            busy = true;
-            cur = index;
-            positionViews();
-            updateUI();
-            setTimeout(function() { busy = false; }, 750);
-        }
-
-        function flipView(dir) { goToView(cur + dir); }
-
-        function updateUI() {
-            counter.textContent = (cur + 1) + ' / ' + totalViews;
-            prevBtn.disabled = (cur === 0);
-            nextBtn.disabled = (cur === totalViews - 1);
-
-            var dots = dotsContainer.querySelectorAll('.page-dot');
-            dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
-
-            mItems.forEach(function(m) {
-                var pageIdx = parseInt(m.dataset.page);
-                m.classList.toggle('active', pageIdx === cur);
-            });
-        }
-
-        // === CLICK ON PAGE: right half = next, left half = prev ===
-        viewEls.forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                if (didDrag) return;
-                var rect = viewport.getBoundingClientRect();
-                var clickX = e.clientX - rect.left;
-                if (clickX > rect.width / 2) {
-                    flipView(1);  // right side = next
-                } else {
-                    flipView(-1); // left side = prev
-                }
-            });
+        mItems.forEach(function (m) {
+            m.classList.toggle('active', parseInt(m.dataset.page) === pg);
         });
+    }
 
-        // === ARROWS ===
-        nextBtn.addEventListener('click', function() { flipView(1); });
-        prevBtn.addEventListener('click', function() { flipView(-1); });
+    function buildDots() {
+        dotsContainer.innerHTML = '';
+        for (var i = 0; i < TOTAL; i++) {
+            var d = document.createElement('div');
+            d.className = 'page-dot';
+            (function (idx) { d.addEventListener('click', function () { goToPage(idx); }); })(i);
+            dotsContainer.appendChild(d);
+        }
+    }
 
-        // === MENU ===
-        hBtn.addEventListener('click', function() {
-            mPanel.classList.contains('open') ? closeMenu() : openMenu();
+    /* ════════════════════════════════════════
+       NAVIGATION
+       Both mobile and desktop:
+         forward()  → flipPrev() (lower internal idx → next user page)
+         backward() → flipNext() (higher internal idx → previous user page)
+    ════════════════════════════════════════ */
+
+    function activeFlipper() { return isMobile ? mobileFlip : desktopFlip; }
+
+    function forward()  { var f = activeFlipper(); if (f) f.flipPrev(); }
+    function backward() { var f = activeFlipper(); if (f) f.flipNext(); }
+
+    function goToPage(pg) {
+        if (pg < 0 || pg >= TOTAL) return;
+        var f = activeFlipper();
+        if (!f) return;
+        f.flip(isMobile ? Um(pg) : D_MAP[pg]);
+    }
+
+    /* ════════════════════════════════════════
+       DESKTOP FLIPBOOK
+       2-page spread, reversed + pairs swapped, showCover, all-soft pages
+    ════════════════════════════════════════ */
+
+    function desktopSize() {
+        var r = 0.707, vpW = viewport.offsetWidth, vpH = viewport.offsetHeight;
+        var pH = vpH - 40, pW = pH * r;
+        if (pW * 2 > vpW - 60) { pW = (vpW - 60) / 2; pH = pW / r; }
+        pW = Math.min(pW, 480);
+        pH = Math.min(pH, pW / r);
+        return { width: Math.floor(pW), height: Math.floor(pH) };
+    }
+
+    function initDesktop() {
+        var prev = currentPage;
+        if (desktopFlip) { desktopFlip.destroy(); desktopFlip = null; }
+        var s = desktopSize();
+
+        desktopFlip = new St.PageFlip(desktopEl, {
+            width: s.width, height: s.height, size: 'fixed',
+            minWidth: 180, maxWidth: 650, minHeight: 250, maxHeight: 950,
+            showCover: true, usePortrait: false,
+            maxShadowOpacity: 0.5, mobileScrollSupport: false,
+            clickEventForward: true, useMouseEvents: true,
+            swipeDistance: 30, showPageCorners: true,
+            disableFlipByClick: false, flippingTime: 700,
+            startZIndex: 0, autoSize: false, drawShadow: true,
+            startPage: LAST   /* cover at internal idx 7 */
         });
-        mOverlay.addEventListener('click', closeMenu);
+        desktopFlip.loadFromHTML(desktopEl.querySelectorAll('.page-content'));
 
-        function openMenu() { mPanel.classList.add('open'); mOverlay.classList.add('open'); hBtn.classList.add('open'); }
-        function closeMenu() { mPanel.classList.remove('open'); mOverlay.classList.remove('open'); hBtn.classList.remove('open'); }
+        if (prev > 0) setTimeout(function () { desktopFlip.flip(D_MAP[prev]); }, 100);
 
-        mItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                var pageIdx = parseInt(item.dataset.page);
-                closeMenu();
-                setTimeout(function() { goToView(pageIdx); }, 300);
-            });
+        function onFlip() { updateUI(D_MAP[desktopFlip.getCurrentPageIndex()]); }
+        desktopFlip.on('flip', onFlip);
+        desktopFlip.on('changeState', onFlip);
+        updateUI(prev);
+    }
+
+    /* ════════════════════════════════════════
+       MOBILE FLIPBOOK
+       Portrait (1 page), reversed simple order, showCover, all-soft pages
+       startPage: 7 (cover) — same direction as desktop
+       flipPrev() = forward, flipNext() = backward
+       Tap LEFT  → forward  (next page in Hebrew reading direction)
+       Tap RIGHT → backward (previous page)
+    ════════════════════════════════════════ */
+
+    function mobileSize() {
+        var r = 0.707, vpW = viewport.offsetWidth, vpH = viewport.offsetHeight;
+        var pH = vpH - 16, pW = pH * r;
+        if (pW > vpW - 16) { pW = vpW - 16; pH = pW / r; }
+        return { width: Math.floor(pW), height: Math.floor(pH) };
+    }
+
+    function initMobile() {
+        var prev = currentPage;
+        if (mobileFlip) { mobileFlip.destroy(); mobileFlip = null; }
+        var s = mobileSize();
+
+        mobileFlip = new St.PageFlip(mobileEl, {
+            width: s.width, height: s.height, size: 'fixed',
+            minWidth: 150, maxWidth: 500, minHeight: 200, maxHeight: 900,
+            showCover: true, usePortrait: true,
+            maxShadowOpacity: 0.4, mobileScrollSupport: false,
+            clickEventForward: false, useMouseEvents: true,
+            swipeDistance: 40, showPageCorners: true,
+            disableFlipByClick: true,  /* tap zones handled below */
+            flippingTime: 600,
+            startZIndex: 0, autoSize: false, drawShadow: true,
+            startPage: LAST   /* cover at internal idx 7 (same reversed logic) */
         });
+        mobileFlip.loadFromHTML(mobileEl.querySelectorAll('.page-content'));
 
-        // === TOUCH SWIPE ===
-        // Direction: swipe LEFT = forward (page turns left, new page from right)
-        var tx0, ty0, tdx, swiping, t0;
+        if (prev > 0) setTimeout(function () { mobileFlip.flip(Um(prev)); }, 100);
 
-        viewport.addEventListener('touchstart', function(e) {
-            if (busy) return;
-            tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY;
-            tdx = 0; swiping = false; t0 = Date.now();
-            viewEls.forEach(function(v) { v.classList.add('no-transition'); });
+        function onFlip() { updateUI(mU(mobileFlip.getCurrentPageIndex())); }
+        mobileFlip.on('flip', onFlip);
+        mobileFlip.on('changeState', onFlip);
+        updateUI(prev);
+    }
+
+    /* ── Mobile tap zones ── */
+    (function () {
+        var startX = 0, startY = 0, wasDrag = false;
+
+        mobileEl.addEventListener('touchstart', function (e) {
+            startX  = e.touches[0].clientX;
+            startY  = e.touches[0].clientY;
+            wasDrag = false;
         }, { passive: true });
 
-        viewport.addEventListener('touchmove', function(e) {
-            if (busy) return;
-            var dx = e.touches[0].clientX - tx0;
-            var dy = e.touches[0].clientY - ty0;
-            if (!swiping) {
-                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) swiping = true;
-                else if (Math.abs(dy) > 10) return;
-            }
-            if (!swiping) return;
+        mobileEl.addEventListener('touchmove', function (e) {
+            if (Math.abs(e.touches[0].clientX - startX) > 12 ||
+                Math.abs(e.touches[0].clientY - startY) > 12) wasDrag = true;
+        }, { passive: true });
+
+        /* passive:false → preventDefault stops ghost 'click' from firing */
+        mobileEl.addEventListener('touchend', function (e) {
+            if (wasDrag || !mobileFlip) return;
             e.preventDefault();
-            tdx = dx;
-
-            var pct = (tdx / viewport.offsetWidth) * 100;
-            var cv = viewEls[cur];
-
-            // Current page follows finger with 3D rotation
-            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (pct * 0.15) + 'deg) scale(' + (1 - Math.abs(pct) * 0.0005) + ')';
-            cv.style.opacity = String(Math.max(0.15, 1 - Math.abs(pct) * 0.01));
-            cv.style.boxShadow = Math.abs(pct) > 5 ? (pct < 0 ? '-' : '') + '12px 0 35px rgba(0,0,0,' + (Math.min(Math.abs(pct) * 0.003, 0.2)) + ')' : 'none';
-
-            // Swipe left (forward): reveal next page from right
-            if (tdx < 0 && cur < totalViews - 1) {
-                var nv = viewEls[cur + 1];
-                var p = Math.min(Math.abs(pct) / 100, 1);
-                nv.style.transform = 'translateX(' + (25 - 25 * p) + '%) scale(' + (0.92 + 0.08 * p) + ')';
-                nv.style.opacity = String(Math.min(p * 1.5, 1));
-            }
-            // Swipe right (backward): bring prev page back from left
-            else if (tdx > 0 && cur > 0) {
-                var pv = viewEls[cur - 1];
-                var p2 = Math.min(Math.abs(pct) / 100, 1);
-                pv.style.transform = 'translateX(' + (-100 + 100 * p2) + '%) rotateY(' + (25 - 25 * p2) + 'deg) scale(' + (0.95 + 0.05 * p2) + ')';
-                pv.style.opacity = String(Math.min(p2 * 1.5, 1));
+            var rect = mobileEl.getBoundingClientRect();
+            var x    = e.changedTouches[0].clientX - rect.left;
+            if (x > rect.width / 2) {
+                backward(); /* right side → previous page */
+            } else {
+                forward();  /* left  side → next page     */
             }
         }, { passive: false });
-
-        viewport.addEventListener('touchend', function() {
-            viewEls.forEach(function(v) {
-                v.classList.remove('no-transition');
-                v.style.transform = ''; v.style.opacity = ''; v.style.boxShadow = '';
-            });
-            if (!swiping) return;
-            var vel = Math.abs(tdx) / (Date.now() - t0);
-            var thr = vel > 0.3 ? 30 : viewport.offsetWidth * 0.2;
-            if (tdx < -thr && cur < totalViews - 1) goToView(cur + 1);       // swipe left = forward
-            else if (tdx > thr && cur > 0) goToView(cur - 1);                 // swipe right = backward
-            else positionViews();
-        }, { passive: true });
-
-        // === MOUSE DRAG ===
-        var mDown = false, mx0, mdx, didDrag = false;
-
-        viewport.addEventListener('mousedown', function(e) {
-            if (busy) return;
-            mDown = true; didDrag = false; mx0 = e.clientX; mdx = 0;
-            viewEls.forEach(function(v) { v.classList.add('no-transition'); });
-            viewport.style.cursor = 'grabbing';
-            e.preventDefault();
-        });
-
-        window.addEventListener('mousemove', function(e) {
-            if (!mDown) return;
-            mdx = e.clientX - mx0;
-            if (Math.abs(mdx) > 5) didDrag = true;
-
-            var pct = (mdx / viewport.offsetWidth) * 100;
-            var cv = viewEls[cur];
-
-            cv.style.transform = 'translateX(' + pct + '%) rotateY(' + (pct * 0.15) + 'deg) scale(' + (1 - Math.abs(pct) * 0.0005) + ')';
-            cv.style.opacity = String(Math.max(0.15, 1 - Math.abs(pct) * 0.01));
-            cv.style.boxShadow = Math.abs(pct) > 5 ? (pct < 0 ? '-' : '') + '12px 0 35px rgba(0,0,0,' + (Math.min(Math.abs(pct) * 0.003, 0.2)) + ')' : 'none';
-
-            if (mdx < 0 && cur < totalViews - 1) {
-                var nv = viewEls[cur + 1];
-                var p = Math.min(Math.abs(pct) / 100, 1);
-                nv.style.transform = 'translateX(' + (25 - 25 * p) + '%) scale(' + (0.92 + 0.08 * p) + ')';
-                nv.style.opacity = String(Math.min(p * 1.5, 1));
-            } else if (mdx > 0 && cur > 0) {
-                var pv = viewEls[cur - 1];
-                var p2 = Math.min(Math.abs(pct) / 100, 1);
-                pv.style.transform = 'translateX(' + (-100 + 100 * p2) + '%) rotateY(' + (25 - 25 * p2) + 'deg) scale(' + (0.95 + 0.05 * p2) + ')';
-                pv.style.opacity = String(Math.min(p2 * 1.5, 1));
-            }
-        });
-
-        window.addEventListener('mouseup', function() {
-            if (!mDown) return;
-            mDown = false; viewport.style.cursor = '';
-            viewEls.forEach(function(v) {
-                v.classList.remove('no-transition'); v.style.transform = ''; v.style.opacity = ''; v.style.boxShadow = '';
-            });
-            if (!didDrag) return;
-            var thr = viewport.offsetWidth * 0.15;
-            if (mdx < -thr && cur < totalViews - 1) goToView(cur + 1);
-            else if (mdx > thr && cur > 0) goToView(cur - 1);
-            else positionViews();
-            setTimeout(function() { didDrag = false; }, 50);
-        });
-
-        // === KEYBOARD (Left=forward, Right=backward for this direction) ===
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mPanel.classList.contains('open')) closeMenu();
-            if (e.key === 'ArrowLeft') flipView(1);
-            if (e.key === 'ArrowRight') flipView(-1);
-        });
-
-        // === INIT ===
-        positionViews();
-        updateUI();
     })();
-    </script>
+
+    /* ════════════════════════════════════════
+       BUTTONS + KEYBOARD
+    ════════════════════════════════════════ */
+
+    nextBtn.addEventListener('click', forward);
+    prevBtn.addEventListener('click', backward);
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape'     && mPanel.classList.contains('open')) closeMenu();
+        if (e.key === 'ArrowLeft')  forward();
+        if (e.key === 'ArrowRight') backward();
+    });
+
+    /* ════════════════════════════════════════
+       HAMBURGER MENU
+    ════════════════════════════════════════ */
+
+    hBtn.addEventListener('click', function () {
+        mPanel.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    mOverlay.addEventListener('click', closeMenu);
+
+    function openMenu()  { mPanel.classList.add('open');    mOverlay.classList.add('open');    hBtn.classList.add('open');    }
+    function closeMenu() { mPanel.classList.remove('open'); mOverlay.classList.remove('open'); hBtn.classList.remove('open'); }
+
+    mItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var pg = parseInt(item.dataset.page);
+            closeMenu();
+            setTimeout(function () { goToPage(pg); }, 300);
+        });
+    });
+
+    /* ════════════════════════════════════════
+       RESIZE
+    ════════════════════════════════════════ */
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            var was = isMobile;
+            isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                if (!was && desktopFlip) { desktopFlip.destroy(); desktopFlip = null; }
+                initMobile();
+            } else {
+                if (was && mobileFlip) { mobileFlip.destroy(); mobileFlip = null; }
+                initDesktop();
+            }
+        }, 200);
+    });
+
+    /* ════════════════════════════════════════
+       INIT
+    ════════════════════════════════════════ */
+
+    buildDots();
+
+    if (isMobile) {
+        initMobile();
+    } else {
+        var imgs = desktopEl.querySelectorAll('img'), loaded = 0;
+        function checkReady() { if (++loaded >= imgs.length) initDesktop(); }
+        imgs.forEach(function (img) {
+            if (img.complete) checkReady();
+            else { img.addEventListener('load', checkReady); img.addEventListener('error', checkReady); }
+        });
+        setTimeout(function () { if (!desktopFlip) initDesktop(); }, 2500);
+    }
+
+})();
+</script>
 
 </body>
 </html>
