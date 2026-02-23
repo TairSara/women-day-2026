@@ -249,23 +249,23 @@
     </div>
 
     <!--
-      MOBILE: reversed array, simple order (no pairs swap) → portrait, 1 page at a time
-      All pages soft → flip animation on every transition incl. cover & back cover
-      idx: 0=last  1=page7  2=page6  3=page5  4=page4  5=page3  6=page2  7=page1(cover)
-      internalToUser(i) = 7 - i  (simple reversal)
-      flipPrev() = lower idx = user going FORWARD
-      Tap LEFT half  → forward  (next page)
-      Tap RIGHT half → backward (previous page)
+      MOBILE: sequential order → portrait, 1 page at a time, flip animation goes LEFT
+      idx: 0=page1(cover)  1=page2  2=page3  3=page4  4=page5  5=page6  6=page7  7=last
+      internalToUser(i) = i  (1:1)
+      flipNext() = higher idx = user going FORWARD  → animation goes LEFT ✓
+      flipPrev() = lower  idx = user going BACKWARD → animation goes RIGHT ✓
+      Tap LEFT half  → flipNext() → next page
+      Tap RIGHT half → flipPrev() → previous page
     -->
     <div id="mobileFlipbook">
-        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
-        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
-        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
         <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
+        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
     </div>
 
 </div>
@@ -305,23 +305,16 @@
     var LAST  = TOTAL - 1; // = 7
 
     /*
-      Both desktop and mobile use reversed arrays (higher idx = cover).
-      flipPrev() = lower internal idx = user going FORWARD (Hebrew reading direction).
-      flipNext() = higher internal idx = user going BACKWARD.
+      DESKTOP: reversed + pairs swapped.
+        flipPrev() = lower idx = user FORWARD.  flipNext() = user BACKWARD.
+        D_MAP[user] = internal (self-inverse): [7,5,6,3,4,1,2,0]
 
-      Desktop page map (reversed + pairs swapped, self-inverse):
-        user:     0  1  2  3  4  5  6  7
-        internal: 7  5  6  3  4  1  2  0
-
-      Mobile page map (simple reversal):
-        user:     0  1  2  3  4  5  6  7
-        internal: 7  6  5  4  3  2  1  0
-        i.e. internalToUser(i) = 7 - i
+      MOBILE: sequential order (idx 0=cover … idx 7=last), startPage:0.
+        flipNext() = higher idx = user FORWARD  → animation flies LEFT ✓
+        flipPrev() = lower  idx = user BACKWARD → animation flies RIGHT ✓
+        internalToUser(i) = i  (1:1)
     */
-    var D_MAP = [7, 5, 6, 3, 4, 1, 2, 0]; // desktop (self-inverse)
-
-    function mU(i) { return LAST - i; }  // mobile: internal → user
-    function Um(u) { return LAST - u; }  // mobile: user → internal
+    var D_MAP = [7, 5, 6, 3, 4, 1, 2, 0]; // desktop page map (self-inverse)
 
     /* ── State ── */
     var currentPage = 0;
@@ -363,16 +356,20 @@
          backward() → flipNext() (higher internal idx → previous user page)
     ════════════════════════════════════════ */
 
-    function activeFlipper() { return isMobile ? mobileFlip : desktopFlip; }
-
-    function forward()  { var f = activeFlipper(); if (f) f.flipPrev(); }
-    function backward() { var f = activeFlipper(); if (f) f.flipNext(); }
+    /* Desktop: flipPrev=forward / Mobile: flipNext=forward */
+    function forward() {
+        if (isMobile) { if (mobileFlip)  mobileFlip.flipNext();  }
+        else           { if (desktopFlip) desktopFlip.flipPrev(); }
+    }
+    function backward() {
+        if (isMobile) { if (mobileFlip)  mobileFlip.flipPrev();  }
+        else           { if (desktopFlip) desktopFlip.flipNext(); }
+    }
 
     function goToPage(pg) {
         if (pg < 0 || pg >= TOTAL) return;
-        var f = activeFlipper();
-        if (!f) return;
-        f.flip(isMobile ? Um(pg) : D_MAP[pg]);
+        if (isMobile) { if (mobileFlip)  mobileFlip.flip(pg);         } // 1:1 mapping
+        else           { if (desktopFlip) desktopFlip.flip(D_MAP[pg]); }
     }
 
     /* ════════════════════════════════════════
@@ -446,13 +443,13 @@
             disableFlipByClick: true,  /* tap zones handled below */
             flippingTime: 600,
             startZIndex: 0, autoSize: false, drawShadow: true,
-            startPage: LAST   /* cover at internal idx 7 (same reversed logic) */
+            startPage: 0   /* sequential: cover at idx 0 */
         });
         mobileFlip.loadFromHTML(mobileEl.querySelectorAll('.page-content'));
 
-        if (prev > 0) setTimeout(function () { mobileFlip.flip(Um(prev)); }, 100);
+        if (prev > 0) setTimeout(function () { mobileFlip.flip(prev); }, 100); // 1:1
 
-        function onFlip() { updateUI(mU(mobileFlip.getCurrentPageIndex())); }
+        function onFlip() { updateUI(mobileFlip.getCurrentPageIndex()); } // 1:1
         mobileFlip.on('flip', onFlip);
         mobileFlip.on('changeState', onFlip);
         updateUI(prev);
@@ -480,9 +477,11 @@
             var rect = mobileEl.getBoundingClientRect();
             var x    = e.changedTouches[0].clientX - rect.left;
             if (x > rect.width / 2) {
-                backward(); /* right side → previous page */
+                /* right side → backward (flipPrev, animation goes RIGHT) */
+                if (currentPage > 0) mobileFlip.flipPrev();
             } else {
-                forward();  /* left  side → next page     */
+                /* left side → forward (flipNext, animation goes LEFT) */
+                if (currentPage < LAST) mobileFlip.flipNext();
             }
         }, { passive: false });
     })();
