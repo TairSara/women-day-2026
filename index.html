@@ -249,23 +249,23 @@
     </div>
 
     <!--
-      MOBILE: sequential order → portrait, 1 page at a time, flip animation goes LEFT
-      idx: 0=page1(cover)  1=page2  2=page3  3=page4  4=page5  5=page6  6=page7  7=last
-      internalToUser(i) = i  (1:1)
-      flipNext() = higher idx = user going FORWARD  → animation goes LEFT ✓
-      flipPrev() = lower  idx = user going BACKWARD → animation goes RIGHT ✓
-      Tap LEFT half  → flipNext() → next page
-      Tap RIGHT half → flipPrev() → previous page
+      MOBILE: reversed simple order (no pairs-swap) → portrait, 1 page at a time
+      idx: 0=last  1=page7  2=page6  3=page5  4=page4  5=page3  6=page2  7=page1(cover)
+      internalToUser(i) = 7-i   /   userToInternal(u) = 7-u
+      flipPrev() = lower idx = user FORWARD  → animation goes RIGHT (Hebrew RTL ✓)
+      flipNext() = higher idx = user BACKWARD → animation goes LEFT
+      Tap LEFT half  → flipPrev() → next page   (animates RIGHT)
+      Tap RIGHT half → flipNext() → prev page   (animates LEFT)
     -->
     <div id="mobileFlipbook">
-        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
-        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
         <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
     </div>
 
 </div>
@@ -356,19 +356,19 @@
          backward() → flipNext() (higher internal idx → previous user page)
     ════════════════════════════════════════ */
 
-    /* Desktop: flipPrev=forward / Mobile: flipNext=forward */
+    /* Both modes: flipPrev()=forward (animation RIGHT), flipNext()=backward */
     function forward() {
-        if (isMobile) { if (mobileFlip)  mobileFlip.flipNext();  }
-        else           { if (desktopFlip) desktopFlip.flipPrev(); }
+        var f = isMobile ? mobileFlip : desktopFlip;
+        if (f) f.flipPrev();
     }
     function backward() {
-        if (isMobile) { if (mobileFlip)  mobileFlip.flipPrev();  }
-        else           { if (desktopFlip) desktopFlip.flipNext(); }
+        var f = isMobile ? mobileFlip : desktopFlip;
+        if (f) f.flipNext();
     }
 
     function goToPage(pg) {
         if (pg < 0 || pg >= TOTAL) return;
-        if (isMobile) { if (mobileFlip)  mobileFlip.flip(pg);         } // 1:1 mapping
+        if (isMobile) { if (mobileFlip)  mobileFlip.flip(LAST - pg);  } // reversed
         else           { if (desktopFlip) desktopFlip.flip(D_MAP[pg]); }
     }
 
@@ -443,13 +443,13 @@
             disableFlipByClick: true,  /* tap zones handled below */
             flippingTime: 600,
             startZIndex: 0, autoSize: false, drawShadow: true,
-            startPage: 0   /* sequential: cover at idx 0 */
+            startPage: LAST   /* reversed: cover at idx 7 */
         });
         mobileFlip.loadFromHTML(mobileEl.querySelectorAll('.page-content'));
 
-        if (prev > 0) setTimeout(function () { mobileFlip.flip(prev); }, 100); // 1:1
+        if (prev > 0) setTimeout(function () { mobileFlip.flip(LAST - prev); }, 100);
 
-        function onFlip() { updateUI(mobileFlip.getCurrentPageIndex()); } // 1:1
+        function onFlip() { updateUI(LAST - mobileFlip.getCurrentPageIndex()); }
         mobileFlip.on('flip', onFlip);
         mobileFlip.on('changeState', onFlip);
         updateUI(prev);
@@ -477,11 +477,11 @@
             var rect = mobileEl.getBoundingClientRect();
             var x    = e.changedTouches[0].clientX - rect.left;
             if (x > rect.width / 2) {
-                /* right side → backward (flipPrev, animation goes RIGHT) */
-                if (currentPage > 0) mobileFlip.flipPrev();
+                /* right → backward: flipNext (animation LEFT) */
+                if (currentPage > 0) mobileFlip.flipNext();
             } else {
-                /* left side → forward (flipNext, animation goes LEFT) */
-                if (currentPage < LAST) mobileFlip.flipNext();
+                /* left → forward: flipPrev (animation RIGHT — Hebrew RTL) */
+                if (currentPage < LAST) mobileFlip.flipPrev();
             }
         }, { passive: false });
     })();
