@@ -437,10 +437,10 @@
             minWidth: 150, maxWidth: 500, minHeight: 200, maxHeight: 900,
             showCover: false, usePortrait: true,
             maxShadowOpacity: 0.4, mobileScrollSupport: false,
-            clickEventForward: false, useMouseEvents: true,
-            swipeDistance: 40, showPageCorners: true,
-            disableFlipByClick: true,  /* tap zones handled below */
-            flippingTime: 600,
+            clickEventForward: false, useMouseEvents: false, /* we handle touch manually */
+            swipeDistance: 999, showPageCorners: false,
+            disableFlipByClick: true,
+            flippingTime: 900,  /* slower, smoother */
             startZIndex: 0, autoSize: false, drawShadow: true,
             startPage: 0   /* sequential: cover at idx 0 */
         });
@@ -454,35 +454,38 @@
         updateUI(prev);
     }
 
-    /* ── Mobile tap zones ── */
+    /* ── Mobile tap zones (on viewport so library can't steal the event) ── */
     (function () {
         var startX = 0, startY = 0, wasDrag = false;
 
-        mobileEl.addEventListener('touchstart', function (e) {
+        /* capture:true → we run before any library handler */
+        viewport.addEventListener('touchstart', function (e) {
+            if (!isMobile) return;
             startX  = e.touches[0].clientX;
             startY  = e.touches[0].clientY;
             wasDrag = false;
-        }, { passive: true });
+        }, { passive: true, capture: true });
 
-        mobileEl.addEventListener('touchmove', function (e) {
+        viewport.addEventListener('touchmove', function (e) {
+            if (!isMobile) return;
             if (Math.abs(e.touches[0].clientX - startX) > 12 ||
                 Math.abs(e.touches[0].clientY - startY) > 12) wasDrag = true;
-        }, { passive: true });
+        }, { passive: true, capture: true });
 
         /* passive:false → preventDefault stops ghost 'click' from firing */
-        mobileEl.addEventListener('touchend', function (e) {
-            if (wasDrag || !mobileFlip) return;
+        viewport.addEventListener('touchend', function (e) {
+            if (!isMobile || wasDrag || !mobileFlip) return;
             e.preventDefault();
             var rect = mobileEl.getBoundingClientRect();
             var x    = e.changedTouches[0].clientX - rect.left;
             if (x > rect.width / 2) {
-                /* right → backward: flipPrev (animation RIGHT) */
+                /* right → backward */
                 if (currentPage > 0) mobileFlip.flipPrev();
             } else {
-                /* left → forward: flipNext (animation LEFT ✓) */
+                /* left → forward */
                 if (currentPage < LAST) mobileFlip.flipNext();
             }
-        }, { passive: false });
+        }, { passive: false, capture: true });
     })();
 
     /* ════════════════════════════════════════
