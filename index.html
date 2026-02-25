@@ -218,9 +218,49 @@
             <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 7</div></div>
         </div>
 
+        <div class="menu-section-label">טלי רם שפירא</div>
         <div class="menu-page-item" data-page="7">
+            <div class="menu-page-thumb"><img src="page8.webp" alt="טלי רם שפירא"></div>
+            <div class="menu-page-info"><div class="page-name">טלי רם שפירא</div><div class="page-number">עמוד 8</div></div>
+        </div>
+        <div class="menu-page-item" data-page="8">
+            <div class="menu-page-thumb"><img src="page9.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 9</div></div>
+        </div>
+
+        <div class="menu-section-label">טלי אורה</div>
+        <div class="menu-page-item" data-page="9">
+            <div class="menu-page-thumb"><img src="page10.webp" alt="טלי אורה"></div>
+            <div class="menu-page-info"><div class="page-name">טלי אורה</div><div class="page-number">עמוד 10</div></div>
+        </div>
+        <div class="menu-page-item" data-page="10">
+            <div class="menu-page-thumb"><img src="page11.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 11</div></div>
+        </div>
+
+        <div class="menu-section-label">רעות אהרון</div>
+        <div class="menu-page-item" data-page="11">
+            <div class="menu-page-thumb"><img src="page12.webp" alt="רעות אהרון"></div>
+            <div class="menu-page-info"><div class="page-name">רעות אהרון</div><div class="page-number">עמוד 12</div></div>
+        </div>
+        <div class="menu-page-item" data-page="12">
+            <div class="menu-page-thumb"><img src="page13.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 13</div></div>
+        </div>
+
+        <div class="menu-section-label">מוריה אביטל</div>
+        <div class="menu-page-item" data-page="13">
+            <div class="menu-page-thumb"><img src="page14.webp" alt="מוריה אביטל"></div>
+            <div class="menu-page-info"><div class="page-name">מוריה אביטל</div><div class="page-number">עמוד 14</div></div>
+        </div>
+        <div class="menu-page-item" data-page="14">
+            <div class="menu-page-thumb"><img src="page15.webp" alt="הסיפור שלי"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 15</div></div>
+        </div>
+
+        <div class="menu-page-item" data-page="15">
             <div class="menu-page-thumb"><img src="last.webp" alt="עמוד אחרון"></div>
-            <div class="menu-page-info"><div class="page-name">עמוד אחרון</div><div class="page-number">עמוד 8</div></div>
+            <div class="menu-page-info"><div class="page-name">עמוד אחרון</div><div class="page-number">עמוד 16</div></div>
         </div>
 
     </div>
@@ -231,41 +271,54 @@
 
     <!--
       DESKTOP: reversed array + pairs swapped → correct RTL 2-page spread
-      All pages soft (no data-density="hard") → flip animation on every transition
-      incl. cover ↔ first spread, and last spread ↔ back cover.
-      idx: 0=last  1=page6  2=page7  3=page4  4=page5  5=page2  6=page3  7=page1(cover)
-      PAGE_MAP[user] = internal = [7,5,6,3,4,1,2,0]  (self-inverse)
+      All pages soft → flip animation on every transition.
+      16 pages total (user 0-15). D_MAP = [15,13,14,11,12,9,10,7,8,5,6,3,4,1,2,0] (self-inverse)
+      idx: 0=last  1=p14  2=p15  3=p12  4=p13  5=p10  6=p11  7=p8  8=p9
+           9=p6  10=p7  11=p4  12=p5  13=p2  14=p3  15=p1(cover)
       flipPrev() = lower idx = user going FORWARD
     -->
     <div id="flipbook">
-        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
-        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
+        <div class="page-content"><img src="last.webp"   alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="page14.webp" alt="עמוד 14"    draggable="false"></div>
+        <div class="page-content"><img src="page15.webp" alt="עמוד 15"    draggable="false"></div>
+        <div class="page-content"><img src="page12.webp" alt="עמוד 12"    draggable="false"></div>
+        <div class="page-content"><img src="page13.webp" alt="עמוד 13"    draggable="false"></div>
+        <div class="page-content"><img src="page10.webp" alt="עמוד 10"    draggable="false"></div>
+        <div class="page-content"><img src="page11.webp" alt="עמוד 11"    draggable="false"></div>
+        <div class="page-content"><img src="page8.webp"  alt="עמוד 8"     draggable="false"></div>
+        <div class="page-content"><img src="page9.webp"  alt="עמוד 9"     draggable="false"></div>
+        <div class="page-content"><img src="page6.webp"  alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page7.webp"  alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp"  alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp"  alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page2.webp"  alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp"  alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page1.webp"  alt="שער"        draggable="false"></div>
     </div>
 
     <!--
       MOBILE: sequential order → portrait, 1 page at a time
-      idx: 0=page1(cover)  1=page2  2=page3  3=page4  4=page5  5=page6  6=page7  7=last
+      idx: 0=page1(cover) … 14=page15  15=last
       internalToUser(i) = i  (1:1)
-      flipNext() = higher idx = user FORWARD  → animation flies LEFT ✓
-      flipPrev() = lower  idx = user BACKWARD → animation flies RIGHT ✓
-      Tap LEFT half  → flipNext() → next page  (animates LEFT)
-      Tap RIGHT half → flipPrev() → prev page  (animates RIGHT)
+      flipNext() = forward (LEFT anim) ✓  flipPrev() = backward
     -->
     <div id="mobileFlipbook">
-        <div class="page-content"><img src="page1.webp" alt="שער"        draggable="false"></div>
-        <div class="page-content"><img src="page2.webp" alt="עמוד 2"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp" alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp" alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp" alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page6.webp" alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page7.webp" alt="עמוד 7"     draggable="false"></div>
-        <div class="page-content"><img src="last.webp"  alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="page1.webp"  alt="שער"        draggable="false"></div>
+        <div class="page-content"><img src="page2.webp"  alt="עמוד 2"     draggable="false"></div>
+        <div class="page-content"><img src="page3.webp"  alt="עמוד 3"     draggable="false"></div>
+        <div class="page-content"><img src="page4.webp"  alt="עמוד 4"     draggable="false"></div>
+        <div class="page-content"><img src="page5.webp"  alt="עמוד 5"     draggable="false"></div>
+        <div class="page-content"><img src="page6.webp"  alt="עמוד 6"     draggable="false"></div>
+        <div class="page-content"><img src="page7.webp"  alt="עמוד 7"     draggable="false"></div>
+        <div class="page-content"><img src="page8.webp"  alt="עמוד 8"     draggable="false"></div>
+        <div class="page-content"><img src="page9.webp"  alt="עמוד 9"     draggable="false"></div>
+        <div class="page-content"><img src="page10.webp" alt="עמוד 10"    draggable="false"></div>
+        <div class="page-content"><img src="page11.webp" alt="עמוד 11"    draggable="false"></div>
+        <div class="page-content"><img src="page12.webp" alt="עמוד 12"    draggable="false"></div>
+        <div class="page-content"><img src="page13.webp" alt="עמוד 13"    draggable="false"></div>
+        <div class="page-content"><img src="page14.webp" alt="עמוד 14"    draggable="false"></div>
+        <div class="page-content"><img src="page15.webp" alt="עמוד 15"    draggable="false"></div>
+        <div class="page-content"><img src="last.webp"   alt="עמוד אחרון" draggable="false"></div>
     </div>
 
 </div>
@@ -301,20 +354,20 @@
     var mItems        = document.querySelectorAll('.menu-page-item');
 
     /* ── Constants ── */
-    var TOTAL = 8;
-    var LAST  = TOTAL - 1; // = 7
+    var TOTAL = 16;
+    var LAST  = TOTAL - 1; // = 15
 
     /*
-      DESKTOP: reversed + pairs swapped.
+      DESKTOP: reversed + pairs swapped (16 pages).
         flipPrev() = lower idx = user FORWARD.  flipNext() = user BACKWARD.
-        D_MAP[user] = internal (self-inverse): [7,5,6,3,4,1,2,0]
+        D_MAP[user] = internal (self-inverse): [15,13,14,11,12,9,10,7,8,5,6,3,4,1,2,0]
 
-      MOBILE: sequential order (idx 0=cover … idx 7=last), startPage:0.
+      MOBILE: sequential order (idx 0=cover … idx 15=last), startPage:0.
         flipNext() = higher idx = user FORWARD  → animation flies LEFT ✓
         flipPrev() = lower  idx = user BACKWARD → animation flies RIGHT ✓
         internalToUser(i) = i  (1:1)
     */
-    var D_MAP = [7, 5, 6, 3, 4, 1, 2, 0]; // desktop page map (self-inverse)
+    var D_MAP = [15, 13, 14, 11, 12, 9, 10, 7, 8, 5, 6, 3, 4, 1, 2, 0]; // self-inverse
 
     /* ── State ── */
     var currentPage = 0;
