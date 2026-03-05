@@ -825,10 +825,9 @@
     /* ════════════════════════════════════════
        MOBILE: CSS slide viewer
        Sequential order (idx 0=פתיח … idx 63=סיום).
-       Always slides LEFT — new page enters from right (+100%), old exits to left (-100%).
-       Works identically for both forward and backward navigation.
-       Tap RIGHT → backward  |  Tap LEFT → forward
-       Swipe LEFT → forward  |  Swipe RIGHT → backward
+       Slide direction matches navigation: forward→LEFT, backward→RIGHT.
+       Tap RIGHT → forward   |  Tap LEFT → backward
+       Swipe RIGHT → forward |  Swipe LEFT → backward
     ════════════════════════════════════════ */
 
     function mobileSize() {
@@ -875,15 +874,19 @@
         var incoming = mobilePages[newIdx];
         var duration = 400;
 
-        /* always slide LEFT: new page enters from right, old exits to left */
+        /* slide direction: forward (higher idx) → slide LEFT; backward → slide RIGHT */
+        var goingForward = newIdx > prevIdx;
+        var enterFrom    = goingForward ?  '100%' : '-100%';
+        var exitTo       = goingForward ? '-100%' :  '100%';
+
         incoming.style.transition = 'none';
-        incoming.style.transform  = 'translateX(100%)';
+        incoming.style.transform  = 'translateX(' + enterFrom + ')';
         incoming.style.display    = 'block';
         incoming.getBoundingClientRect(); // force reflow before transition starts
 
         outgoing.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.4,0,0.2,1)';
         incoming.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.4,0,0.2,1)';
-        outgoing.style.transform  = 'translateX(-100%)';
+        outgoing.style.transform  = 'translateX(' + exitTo + ')';
         incoming.style.transform  = 'translateX(0)';
 
         updateUI(newIdx);
@@ -918,14 +921,14 @@
 
             if (absDX > 40 && absDX > absDY * 1.2) {
                 /* horizontal swipe */
-                if (deltaX < 0) mobileGoTo(currentPage + 1); // swipe left  → forward
-                else             mobileGoTo(currentPage - 1); // swipe right → backward
+                if (deltaX > 0) mobileGoTo(currentPage + 1); // swipe right → forward
+                else             mobileGoTo(currentPage - 1); // swipe left  → backward
             } else if (absDX < 15 && absDY < 15) {
                 /* tap */
                 var rect = mobileEl.getBoundingClientRect();
                 var x    = e.changedTouches[0].clientX - rect.left;
-                if (x > rect.width / 2) mobileGoTo(currentPage - 1); // tap right → backward
-                else                     mobileGoTo(currentPage + 1); // tap left  → forward
+                if (x > rect.width / 2) mobileGoTo(currentPage + 1); // tap right → forward
+                else                     mobileGoTo(currentPage - 1); // tap left  → backward
             }
         }, { passive: false, capture: true });
     })();
@@ -934,8 +937,8 @@
        BUTTONS + KEYBOARD
     ════════════════════════════════════════ */
 
-    nextBtn.addEventListener('click', forward);
-    prevBtn.addEventListener('click', backward);
+    nextBtn.addEventListener('click', backward);
+    prevBtn.addEventListener('click', forward);
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape'     && mPanel.classList.contains('open')) closeMenu();
