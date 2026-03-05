@@ -876,8 +876,8 @@
 
         /* slide direction: forward (higher idx) → slide LEFT; backward → slide RIGHT */
         var goingForward = newIdx > prevIdx;
-        var enterFrom    = goingForward ?  '100%' : '-100%';
-        var exitTo       = goingForward ? '-100%' :  '100%';
+        var enterFrom    = goingForward ? '-100%' :  '100%';
+        var exitTo       = goingForward ?  '100%' : '-100%';
 
         incoming.style.transition = 'none';
         incoming.style.transform  = 'translateX(' + enterFrom + ')';
