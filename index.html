@@ -924,11 +924,10 @@
                 if (deltaX > 0) mobileGoTo(currentPage + 1); // swipe right → forward
                 else             mobileGoTo(currentPage - 1); // swipe left  → backward
             } else if (absDX < 15 && absDY < 15) {
-                /* tap */
-                var rect = mobileEl.getBoundingClientRect();
-                var x    = e.changedTouches[0].clientX - rect.left;
-                if (x > rect.width / 2) mobileGoTo(currentPage + 1); // tap right → forward
-                else                     mobileGoTo(currentPage - 1); // tap left  → backward
+                /* tap — use viewport width so tapping anywhere on screen works correctly */
+                var tapX = e.changedTouches[0].clientX;
+                if (tapX > window.innerWidth / 2) mobileGoTo(currentPage + 1); // tap right → forward
+                else                               mobileGoTo(currentPage - 1); // tap left  → backward
             }
         }, { passive: false, capture: true });
     })();
