@@ -136,14 +136,14 @@
             stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
         }
         .page-dots {
-            display: flex; align-items: center; gap: 6px;
-            flex-wrap: wrap; justify-content: center;
+            display: flex; align-items: center; gap: 4px;
+            flex-wrap: wrap; justify-content: center; max-width: 260px;
         }
         .page-dot {
-            width: 7px; height: 7px; border-radius: 50%;
+            width: 6px; height: 6px; border-radius: 50%;
             background: #ddd; transition: all 0.3s; cursor: pointer;
         }
-        .page-dot.active { background: #1a6b4a; width: 20px; border-radius: 4px; }
+        .page-dot.active { background: #1a6b4a; width: 16px; border-radius: 3px; }
 
         /* ===== MOBILE overrides ===== */
         @media (max-width: 768px) {
@@ -184,131 +184,323 @@
     <div class="menu-pages">
 
         <div class="menu-page-item" data-page="0">
-            <div class="menu-page-thumb"><img src="page1.webp" alt="שער"></div>
-            <div class="menu-page-info"><div class="page-name">שער</div><div class="page-number">עמוד 1</div></div>
+            <div class="menu-page-thumb"><img src="פתיח.webp" alt="פתיח"></div>
+            <div class="menu-page-info"><div class="page-name">פתיח</div><div class="page-number">עמוד 1</div></div>
+        </div>
+
+        <div class="menu-page-item" data-page="1">
+            <div class="menu-page-thumb"><img src="דברי פתיחה.webp" alt="דברי פתיחה"></div>
+            <div class="menu-page-info"><div class="page-name">דברי פתיחה</div><div class="page-number">עמוד 2</div></div>
         </div>
 
         <div class="menu-section-label">שרון פרידמן</div>
-        <div class="menu-page-item" data-page="1">
-            <div class="menu-page-thumb"><img src="page2.webp" alt="שרון פרידמן"></div>
-            <div class="menu-page-info"><div class="page-name">שרון פרידמן</div><div class="page-number">עמוד 2</div></div>
-        </div>
         <div class="menu-page-item" data-page="2">
-            <div class="menu-page-thumb"><img src="page3.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 3</div></div>
+            <div class="menu-page-thumb"><img src="שרון פרידמן 1.webp" alt="שרון פרידמן"></div>
+            <div class="menu-page-info"><div class="page-name">שרון פרידמן</div><div class="page-number">עמוד 3</div></div>
+        </div>
+        <div class="menu-page-item" data-page="3">
+            <div class="menu-page-thumb"><img src="שרון פרידמן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 4</div></div>
         </div>
 
         <div class="menu-section-label">יפעת אשוש</div>
-        <div class="menu-page-item" data-page="3">
-            <div class="menu-page-thumb"><img src="page4.webp" alt="יפעת אשוש"></div>
-            <div class="menu-page-info"><div class="page-name">יפעת אשוש</div><div class="page-number">עמוד 4</div></div>
-        </div>
         <div class="menu-page-item" data-page="4">
-            <div class="menu-page-thumb"><img src="page5.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 5</div></div>
+            <div class="menu-page-thumb"><img src="יפעת אשוש 1.webp" alt="יפעת אשוש"></div>
+            <div class="menu-page-info"><div class="page-name">יפעת אשוש</div><div class="page-number">עמוד 5</div></div>
+        </div>
+        <div class="menu-page-item" data-page="5">
+            <div class="menu-page-thumb"><img src="יפעת אשוש 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 6</div></div>
         </div>
 
-        <div class="menu-section-label">נוי אביטן ששון</div>
-        <div class="menu-page-item" data-page="5">
-            <div class="menu-page-thumb"><img src="page6.webp" alt="נוי אביטן ששון"></div>
-            <div class="menu-page-info"><div class="page-name">נוי אביטן ששון</div><div class="page-number">עמוד 6</div></div>
-        </div>
+        <div class="menu-section-label">נוי שושן</div>
         <div class="menu-page-item" data-page="6">
-            <div class="menu-page-thumb"><img src="page7.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 7</div></div>
+            <div class="menu-page-thumb"><img src="נוי שושן 1.webp" alt="נוי שושן"></div>
+            <div class="menu-page-info"><div class="page-name">נוי שושן</div><div class="page-number">עמוד 7</div></div>
+        </div>
+        <div class="menu-page-item" data-page="7">
+            <div class="menu-page-thumb"><img src="נוי שושן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 8</div></div>
         </div>
 
         <div class="menu-section-label">טלי רם שפירא</div>
-        <div class="menu-page-item" data-page="7">
-            <div class="menu-page-thumb"><img src="page8.webp" alt="טלי רם שפירא"></div>
-            <div class="menu-page-info"><div class="page-name">טלי רם שפירא</div><div class="page-number">עמוד 8</div></div>
-        </div>
         <div class="menu-page-item" data-page="8">
-            <div class="menu-page-thumb"><img src="page9.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 9</div></div>
+            <div class="menu-page-thumb"><img src="טלי רם שפירא 1.webp" alt="טלי רם שפירא"></div>
+            <div class="menu-page-info"><div class="page-name">טלי רם שפירא</div><div class="page-number">עמוד 9</div></div>
+        </div>
+        <div class="menu-page-item" data-page="9">
+            <div class="menu-page-thumb"><img src="טלי רם שפירא 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 10</div></div>
         </div>
 
         <div class="menu-section-label">טלי אורה</div>
-        <div class="menu-page-item" data-page="9">
-            <div class="menu-page-thumb"><img src="page10.webp" alt="טלי אורה"></div>
-            <div class="menu-page-info"><div class="page-name">טלי אורה</div><div class="page-number">עמוד 10</div></div>
-        </div>
         <div class="menu-page-item" data-page="10">
-            <div class="menu-page-thumb"><img src="page11.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 11</div></div>
+            <div class="menu-page-thumb"><img src="טלי אורה 1.webp" alt="טלי אורה"></div>
+            <div class="menu-page-info"><div class="page-name">טלי אורה</div><div class="page-number">עמוד 11</div></div>
+        </div>
+        <div class="menu-page-item" data-page="11">
+            <div class="menu-page-thumb"><img src="טלי אורה 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 12</div></div>
         </div>
 
         <div class="menu-section-label">רעות אהרון</div>
-        <div class="menu-page-item" data-page="11">
-            <div class="menu-page-thumb"><img src="page12.webp" alt="רעות אהרון"></div>
-            <div class="menu-page-info"><div class="page-name">רעות אהרון</div><div class="page-number">עמוד 12</div></div>
-        </div>
         <div class="menu-page-item" data-page="12">
-            <div class="menu-page-thumb"><img src="page13.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 13</div></div>
+            <div class="menu-page-thumb"><img src="רעות אהרון 1.webp" alt="רעות אהרון"></div>
+            <div class="menu-page-info"><div class="page-name">רעות אהרון</div><div class="page-number">עמוד 13</div></div>
+        </div>
+        <div class="menu-page-item" data-page="13">
+            <div class="menu-page-thumb"><img src="רעות אהרון 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 14</div></div>
         </div>
 
         <div class="menu-section-label">מוריה אביטל</div>
-        <div class="menu-page-item" data-page="13">
-            <div class="menu-page-thumb"><img src="page14.webp" alt="מוריה אביטל"></div>
-            <div class="menu-page-info"><div class="page-name">מוריה אביטל</div><div class="page-number">עמוד 14</div></div>
-        </div>
         <div class="menu-page-item" data-page="14">
-            <div class="menu-page-thumb"><img src="page15.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 15</div></div>
+            <div class="menu-page-thumb"><img src="מוריה אביטל 1.webp" alt="מוריה אביטל"></div>
+            <div class="menu-page-info"><div class="page-name">מוריה אביטל</div><div class="page-number">עמוד 15</div></div>
+        </div>
+        <div class="menu-page-item" data-page="15">
+            <div class="menu-page-thumb"><img src="מוריה אביטל 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 16</div></div>
         </div>
 
-        <div class="menu-section-label">מורן ששון</div>
-        <div class="menu-page-item" data-page="15">
-            <div class="menu-page-thumb"><img src="page16.webp" alt="מורן ששון"></div>
-            <div class="menu-page-info"><div class="page-name">מורן ששון</div><div class="page-number">עמוד 16</div></div>
-        </div>
+        <div class="menu-section-label">מורן שושן</div>
         <div class="menu-page-item" data-page="16">
-            <div class="menu-page-thumb"><img src="page17.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 17</div></div>
+            <div class="menu-page-thumb"><img src="מורן שושן 1.webp" alt="מורן שושן"></div>
+            <div class="menu-page-info"><div class="page-name">מורן שושן</div><div class="page-number">עמוד 17</div></div>
+        </div>
+        <div class="menu-page-item" data-page="17">
+            <div class="menu-page-thumb"><img src="מורן שושן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 18</div></div>
         </div>
 
         <div class="menu-section-label">רותי סלובו וקנין</div>
-        <div class="menu-page-item" data-page="17">
-            <div class="menu-page-thumb"><img src="page18.webp" alt="רותי סלובו וקנין"></div>
-            <div class="menu-page-info"><div class="page-name">רותי סלובו וקנין</div><div class="page-number">עמוד 18</div></div>
-        </div>
         <div class="menu-page-item" data-page="18">
-            <div class="menu-page-thumb"><img src="page19.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 19</div></div>
+            <div class="menu-page-thumb"><img src="רותי סלובו וקנין 1.webp" alt="רותי סלובו וקנין"></div>
+            <div class="menu-page-info"><div class="page-name">רותי סלובו וקנין</div><div class="page-number">עמוד 19</div></div>
+        </div>
+        <div class="menu-page-item" data-page="19">
+            <div class="menu-page-thumb"><img src="רותי סלובו וקנין 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 20</div></div>
+        </div>
+
+        <div class="menu-section-label">נלי ברקובי'ץ</div>
+        <div class="menu-page-item" data-page="20">
+            <div class="menu-page-thumb"><img src="נלי ברקובי'ץ 1.webp" alt="נלי ברקובי'ץ"></div>
+            <div class="menu-page-info"><div class="page-name">נלי ברקובי'ץ</div><div class="page-number">עמוד 21</div></div>
+        </div>
+        <div class="menu-page-item" data-page="21">
+            <div class="menu-page-thumb"><img src="נלי ברקובי'ץ 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 22</div></div>
         </div>
 
         <div class="menu-section-label">אלונה גלוז</div>
-        <div class="menu-page-item" data-page="19">
-            <div class="menu-page-thumb"><img src="page20.webp" alt="אלונה גלוז"></div>
-            <div class="menu-page-info"><div class="page-name">אלונה גלוז</div><div class="page-number">עמוד 20</div></div>
+        <div class="menu-page-item" data-page="22">
+            <div class="menu-page-thumb"><img src="אלונה גלוז 1.webp" alt="אלונה גלוז"></div>
+            <div class="menu-page-info"><div class="page-name">אלונה גלוז</div><div class="page-number">עמוד 23</div></div>
         </div>
-        <div class="menu-page-item" data-page="20">
-            <div class="menu-page-thumb"><img src="page21.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 21</div></div>
-        </div>
-        <div class="menu-page-item" data-page="21">
-            <div class="menu-page-thumb"><img src="page22.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 22</div></div>
+        <div class="menu-page-item" data-page="23">
+            <div class="menu-page-thumb"><img src="אלונה גלוז 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 24</div></div>
         </div>
 
         <div class="menu-section-label">אלינה קספרוב</div>
-        <div class="menu-page-item" data-page="22">
-            <div class="menu-page-thumb"><img src="page23.webp" alt="אלינה קספרוב"></div>
-            <div class="menu-page-info"><div class="page-name">אלינה קספרוב</div><div class="page-number">עמוד 23</div></div>
-        </div>
-        <div class="menu-page-item" data-page="23">
-            <div class="menu-page-thumb"><img src="page24.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 24</div></div>
-        </div>
         <div class="menu-page-item" data-page="24">
-            <div class="menu-page-thumb"><img src="page25.webp" alt="הסיפור שלי"></div>
-            <div class="menu-page-info"><div class="page-name">הסיפור שלי</div><div class="page-number">עמוד 25</div></div>
+            <div class="menu-page-thumb"><img src="אלינה קספרוב 1.webp" alt="אלינה קספרוב"></div>
+            <div class="menu-page-info"><div class="page-name">אלינה קספרוב</div><div class="page-number">עמוד 25</div></div>
+        </div>
+        <div class="menu-page-item" data-page="25">
+            <div class="menu-page-thumb"><img src="אלינה קספרוב 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 26</div></div>
         </div>
 
-        <div class="menu-page-item" data-page="25">
-            <div class="menu-page-thumb"><img src="last.webp" alt="עמוד אחרון"></div>
-            <div class="menu-page-info"><div class="page-name">עמוד אחרון</div><div class="page-number">עמוד 26</div></div>
+        <div class="menu-section-label">דפנה בסה</div>
+        <div class="menu-page-item" data-page="26">
+            <div class="menu-page-thumb"><img src="דפנה בסה 1.webp" alt="דפנה בסה"></div>
+            <div class="menu-page-info"><div class="page-name">דפנה בסה</div><div class="page-number">עמוד 27</div></div>
+        </div>
+        <div class="menu-page-item" data-page="27">
+            <div class="menu-page-thumb"><img src="דפנה בסה 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 28</div></div>
+        </div>
+
+        <div class="menu-section-label">ליאת עומסי</div>
+        <div class="menu-page-item" data-page="28">
+            <div class="menu-page-thumb"><img src="ליאת עומסי 1.webp" alt="ליאת עומסי"></div>
+            <div class="menu-page-info"><div class="page-name">ליאת עומסי</div><div class="page-number">עמוד 29</div></div>
+        </div>
+        <div class="menu-page-item" data-page="29">
+            <div class="menu-page-thumb"><img src="ליאת עומסי 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 30</div></div>
+        </div>
+
+        <div class="menu-section-label">יעל סטמטי ליבוביץ</div>
+        <div class="menu-page-item" data-page="30">
+            <div class="menu-page-thumb"><img src="יעל סטמטי ליבוביץ 1.webp" alt="יעל סטמטי ליבוביץ"></div>
+            <div class="menu-page-info"><div class="page-name">יעל סטמטי ליבוביץ</div><div class="page-number">עמוד 31</div></div>
+        </div>
+        <div class="menu-page-item" data-page="31">
+            <div class="menu-page-thumb"><img src="יעל סטמטי ליבוביץ 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 32</div></div>
+        </div>
+
+        <div class="menu-section-label">ענת אמזל</div>
+        <div class="menu-page-item" data-page="32">
+            <div class="menu-page-thumb"><img src="ענת אמזל 1.webp" alt="ענת אמזל"></div>
+            <div class="menu-page-info"><div class="page-name">ענת אמזל</div><div class="page-number">עמוד 33</div></div>
+        </div>
+        <div class="menu-page-item" data-page="33">
+            <div class="menu-page-thumb"><img src="ענת אמזל 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 34</div></div>
+        </div>
+
+        <div class="menu-section-label">הגר פרץ דיין</div>
+        <div class="menu-page-item" data-page="34">
+            <div class="menu-page-thumb"><img src="הגר פרץ דיין  1.webp" alt="הגר פרץ דיין"></div>
+            <div class="menu-page-info"><div class="page-name">הגר פרץ דיין</div><div class="page-number">עמוד 35</div></div>
+        </div>
+        <div class="menu-page-item" data-page="35">
+            <div class="menu-page-thumb"><img src="הגר פרץ דיין  2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 36</div></div>
+        </div>
+
+        <div class="menu-section-label">לירון מילר טל</div>
+        <div class="menu-page-item" data-page="36">
+            <div class="menu-page-thumb"><img src="לירון מילר טל 1.webp" alt="לירון מילר טל"></div>
+            <div class="menu-page-info"><div class="page-name">לירון מילר טל</div><div class="page-number">עמוד 37</div></div>
+        </div>
+        <div class="menu-page-item" data-page="37">
+            <div class="menu-page-thumb"><img src="לירון מילר טל 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 38</div></div>
+        </div>
+
+        <div class="menu-section-label">רחל פלס</div>
+        <div class="menu-page-item" data-page="38">
+            <div class="menu-page-thumb"><img src="רחל פלס 1.webp" alt="רחל פלס"></div>
+            <div class="menu-page-info"><div class="page-name">רחל פלס</div><div class="page-number">עמוד 39</div></div>
+        </div>
+        <div class="menu-page-item" data-page="39">
+            <div class="menu-page-thumb"><img src="רחל פלס 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 40</div></div>
+        </div>
+
+        <div class="menu-section-label">אור בן שמעון</div>
+        <div class="menu-page-item" data-page="40">
+            <div class="menu-page-thumb"><img src="אור בן שמעון 1.webp" alt="אור בן שמעון"></div>
+            <div class="menu-page-info"><div class="page-name">אור בן שמעון</div><div class="page-number">עמוד 41</div></div>
+        </div>
+        <div class="menu-page-item" data-page="41">
+            <div class="menu-page-thumb"><img src="אור בן שמעון 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 42</div></div>
+        </div>
+
+        <div class="menu-section-label">מעיין גבאי</div>
+        <div class="menu-page-item" data-page="42">
+            <div class="menu-page-thumb"><img src="מעיין גבאי 1.webp" alt="מעיין גבאי"></div>
+            <div class="menu-page-info"><div class="page-name">מעיין גבאי</div><div class="page-number">עמוד 43</div></div>
+        </div>
+        <div class="menu-page-item" data-page="43">
+            <div class="menu-page-thumb"><img src="מעיין גבאי 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 44</div></div>
+        </div>
+
+        <div class="menu-section-label">אילנית כהן</div>
+        <div class="menu-page-item" data-page="44">
+            <div class="menu-page-thumb"><img src="אילנית כהן 1.webp" alt="אילנית כהן"></div>
+            <div class="menu-page-info"><div class="page-name">אילנית כהן</div><div class="page-number">עמוד 45</div></div>
+        </div>
+        <div class="menu-page-item" data-page="45">
+            <div class="menu-page-thumb"><img src="אילנית כהן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 46</div></div>
+        </div>
+
+        <div class="menu-section-label">טינה טנוס</div>
+        <div class="menu-page-item" data-page="46">
+            <div class="menu-page-thumb"><img src="טינה טנוס 1.webp" alt="טינה טנוס"></div>
+            <div class="menu-page-info"><div class="page-name">טינה טנוס</div><div class="page-number">עמוד 47</div></div>
+        </div>
+        <div class="menu-page-item" data-page="47">
+            <div class="menu-page-thumb"><img src="טינה טנוס 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 48</div></div>
+        </div>
+
+        <div class="menu-section-label">רננה לנדאו</div>
+        <div class="menu-page-item" data-page="48">
+            <div class="menu-page-thumb"><img src="רננה לנדאו 1.webp" alt="רננה לנדאו"></div>
+            <div class="menu-page-info"><div class="page-name">רננה לנדאו</div><div class="page-number">עמוד 49</div></div>
+        </div>
+        <div class="menu-page-item" data-page="49">
+            <div class="menu-page-thumb"><img src="רננה לנדאו 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 50</div></div>
+        </div>
+
+        <div class="menu-section-label">גל אביטל</div>
+        <div class="menu-page-item" data-page="50">
+            <div class="menu-page-thumb"><img src="גל אביטל 1.webp" alt="גל אביטל"></div>
+            <div class="menu-page-info"><div class="page-name">גל אביטל</div><div class="page-number">עמוד 51</div></div>
+        </div>
+        <div class="menu-page-item" data-page="51">
+            <div class="menu-page-thumb"><img src="גל אביטל 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 52</div></div>
+        </div>
+
+        <div class="menu-section-label">ליז עמר שמיאן</div>
+        <div class="menu-page-item" data-page="52">
+            <div class="menu-page-thumb"><img src="ליז עמר שמיאן 1.webp" alt="ליז עמר שמיאן"></div>
+            <div class="menu-page-info"><div class="page-name">ליז עמר שמיאן</div><div class="page-number">עמוד 53</div></div>
+        </div>
+        <div class="menu-page-item" data-page="53">
+            <div class="menu-page-thumb"><img src="ליז עמר שמיאן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 54</div></div>
+        </div>
+
+        <div class="menu-section-label">ג'ויה אור</div>
+        <div class="menu-page-item" data-page="54">
+            <div class="menu-page-thumb"><img src="ג'ויה אור 1.webp" alt="ג'ויה אור"></div>
+            <div class="menu-page-info"><div class="page-name">ג'ויה אור</div><div class="page-number">עמוד 55</div></div>
+        </div>
+        <div class="menu-page-item" data-page="55">
+            <div class="menu-page-thumb"><img src="ג'ויה אור 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 56</div></div>
+        </div>
+
+        <div class="menu-section-label">סופי כהן</div>
+        <div class="menu-page-item" data-page="56">
+            <div class="menu-page-thumb"><img src="סופי כהן 1.webp" alt="סופי כהן"></div>
+            <div class="menu-page-info"><div class="page-name">סופי כהן</div><div class="page-number">עמוד 57</div></div>
+        </div>
+        <div class="menu-page-item" data-page="57">
+            <div class="menu-page-thumb"><img src="סופי כהן 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 58</div></div>
+        </div>
+
+        <div class="menu-section-label">זיו זוארץ</div>
+        <div class="menu-page-item" data-page="58">
+            <div class="menu-page-thumb"><img src="זיו זוארץ 1.webp" alt="זיו זוארץ"></div>
+            <div class="menu-page-info"><div class="page-name">זיו זוארץ</div><div class="page-number">עמוד 59</div></div>
+        </div>
+        <div class="menu-page-item" data-page="59">
+            <div class="menu-page-thumb"><img src="זיו זוארץ 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 60</div></div>
+        </div>
+
+        <div class="menu-section-label">מירי שובבו</div>
+        <div class="menu-page-item" data-page="60">
+            <div class="menu-page-thumb"><img src="מירי שובבו 1.webp" alt="מירי שובבו"></div>
+            <div class="menu-page-info"><div class="page-name">מירי שובבו</div><div class="page-number">עמוד 61</div></div>
+        </div>
+        <div class="menu-page-item" data-page="61">
+            <div class="menu-page-thumb"><img src="מירי שובבו 2.webp" alt="הסיפור שלה"></div>
+            <div class="menu-page-info"><div class="page-name">הסיפור שלה</div><div class="page-number">עמוד 62</div></div>
+        </div>
+
+        <div class="menu-page-item" data-page="62">
+            <div class="menu-page-thumb"><img src="תודות.webp" alt="תודות"></div>
+            <div class="menu-page-info"><div class="page-name">תודות</div><div class="page-number">עמוד 63</div></div>
+        </div>
+
+        <div class="menu-page-item" data-page="63">
+            <div class="menu-page-thumb"><img src="סיום.webp" alt="סיום"></div>
+            <div class="menu-page-info"><div class="page-name">סיום</div><div class="page-number">עמוד 64</div></div>
         </div>
 
     </div>
@@ -319,74 +511,152 @@
 
     <!--
       DESKTOP: reversed array + pairs swapped → correct RTL 2-page spread
-      26 pages total (user 0-25). D_MAP = [25,23,24,21,22,19,20,17,18,15,16,13,14,11,12,9,10,7,8,5,6,3,4,1,2,0] (self-inverse)
-      idx: 0=last  1=p24  2=p25  3=p22  4=p23  5=p20  6=p21  7=p18  8=p19
-           9=p16  10=p17  11=p14  12=p15  13=p12  14=p13  15=p10  16=p11
-           17=p8  18=p9  19=p6  20=p7  21=p4  22=p5  23=p2  24=p3  25=p1(cover)
+      66 internal pages (64 user pages + 1 extra פתיח + 1 extra סיום).
+      showCover: false so that the cover/back appear as full 2-page spreads.
+      D_MAP_ITU (internal→user, 66 entries): [63] + old_D_MAP + [0]
+      D_MAP_UTI (user→internal, 64 entries): user j→old_D_MAP[j]+1 (j=1..62),
+        user 0→64, user 63→1
       flipPrev() = lower idx = user going FORWARD
+      startPage: LAST_DESKTOP=65 → spread (64,65) = פתיח|פתיח
     -->
     <div id="flipbook">
-        <div class="page-content"><img src="last.webp"   alt="עמוד אחרון" draggable="false"></div>
-        <div class="page-content"><img src="page24.webp" alt="עמוד 24"    draggable="false"></div>
-        <div class="page-content"><img src="page25.webp" alt="עמוד 25"    draggable="false"></div>
-        <div class="page-content"><img src="page22.webp" alt="עמוד 22"    draggable="false"></div>
-        <div class="page-content"><img src="page23.webp" alt="עמוד 23"    draggable="false"></div>
-        <div class="page-content"><img src="page20.webp" alt="עמוד 20"    draggable="false"></div>
-        <div class="page-content"><img src="page21.webp" alt="עמוד 21"    draggable="false"></div>
-        <div class="page-content"><img src="page18.webp" alt="עמוד 18"    draggable="false"></div>
-        <div class="page-content"><img src="page19.webp" alt="עמוד 19"    draggable="false"></div>
-        <div class="page-content"><img src="page16.webp" alt="עמוד 16"    draggable="false"></div>
-        <div class="page-content"><img src="page17.webp" alt="עמוד 17"    draggable="false"></div>
-        <div class="page-content"><img src="page14.webp" alt="עמוד 14"    draggable="false"></div>
-        <div class="page-content"><img src="page15.webp" alt="עמוד 15"    draggable="false"></div>
-        <div class="page-content"><img src="page12.webp" alt="עמוד 12"    draggable="false"></div>
-        <div class="page-content"><img src="page13.webp" alt="עמוד 13"    draggable="false"></div>
-        <div class="page-content"><img src="page10.webp" alt="עמוד 10"    draggable="false"></div>
-        <div class="page-content"><img src="page11.webp" alt="עמוד 11"    draggable="false"></div>
-        <div class="page-content"><img src="page8.webp"  alt="עמוד 8"     draggable="false"></div>
-        <div class="page-content"><img src="page9.webp"  alt="עמוד 9"     draggable="false"></div>
-        <div class="page-content"><img src="page6.webp"  alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page7.webp"  alt="עמוד 7"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp"  alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp"  alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page2.webp"  alt="עמוד 2"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp"  alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page1.webp"  alt="שער"        draggable="false"></div>
+        <div class="page-content"><img src="סיום.webp"                   alt="סיום"                  draggable="false"></div><!-- idx 0  → user 63 (duplicate cover spread) -->
+        <div class="page-content"><img src="סיום.webp"                   alt="סיום"                  draggable="false"></div><!-- idx 1  → user 63 -->
+        <div class="page-content"><img src="מירי שובבו 2.webp"           alt="מירי שובבו 2"           draggable="false"></div><!-- idx 2  → user 61 -->
+        <div class="page-content"><img src="תודות.webp"                  alt="תודות"                  draggable="false"></div><!-- idx 2  → user 62 -->
+        <div class="page-content"><img src="זיו זוארץ 2.webp"            alt="זיו זוארץ 2"            draggable="false"></div><!-- idx 3  → user 59 -->
+        <div class="page-content"><img src="מירי שובבו 1.webp"           alt="מירי שובבו 1"           draggable="false"></div><!-- idx 4  → user 60 -->
+        <div class="page-content"><img src="סופי כהן 2.webp"             alt="סופי כהן 2"             draggable="false"></div><!-- idx 5  → user 57 -->
+        <div class="page-content"><img src="זיו זוארץ 1.webp"            alt="זיו זוארץ 1"            draggable="false"></div><!-- idx 6  → user 58 -->
+        <div class="page-content"><img src="ג'ויה אור 2.webp"            alt="ג'ויה אור 2"            draggable="false"></div><!-- idx 7  → user 55 -->
+        <div class="page-content"><img src="סופי כהן 1.webp"             alt="סופי כהן 1"             draggable="false"></div><!-- idx 8  → user 56 -->
+        <div class="page-content"><img src="ליז עמר שמיאן 2.webp"        alt="ליז עמר שמיאן 2"        draggable="false"></div><!-- idx 9  → user 53 -->
+        <div class="page-content"><img src="ג'ויה אור 1.webp"            alt="ג'ויה אור 1"            draggable="false"></div><!-- idx 10 → user 54 -->
+        <div class="page-content"><img src="גל אביטל 2.webp"             alt="גל אביטל 2"             draggable="false"></div><!-- idx 11 → user 51 -->
+        <div class="page-content"><img src="ליז עמר שמיאן 1.webp"        alt="ליז עמר שמיאן 1"        draggable="false"></div><!-- idx 12 → user 52 -->
+        <div class="page-content"><img src="רננה לנדאו 2.webp"           alt="רננה לנדאו 2"           draggable="false"></div><!-- idx 13 → user 49 -->
+        <div class="page-content"><img src="גל אביטל 1.webp"             alt="גל אביטל 1"             draggable="false"></div><!-- idx 14 → user 50 -->
+        <div class="page-content"><img src="טינה טנוס 2.webp"            alt="טינה טנוס 2"            draggable="false"></div><!-- idx 15 → user 47 -->
+        <div class="page-content"><img src="רננה לנדאו 1.webp"           alt="רננה לנדאו 1"           draggable="false"></div><!-- idx 16 → user 48 -->
+        <div class="page-content"><img src="אילנית כהן 2.webp"           alt="אילנית כהן 2"           draggable="false"></div><!-- idx 17 → user 45 -->
+        <div class="page-content"><img src="טינה טנוס 1.webp"            alt="טינה טנוס 1"            draggable="false"></div><!-- idx 18 → user 46 -->
+        <div class="page-content"><img src="מעיין גבאי 2.webp"           alt="מעיין גבאי 2"           draggable="false"></div><!-- idx 19 → user 43 -->
+        <div class="page-content"><img src="אילנית כהן 1.webp"           alt="אילנית כהן 1"           draggable="false"></div><!-- idx 20 → user 44 -->
+        <div class="page-content"><img src="אור בן שמעון 2.webp"         alt="אור בן שמעון 2"         draggable="false"></div><!-- idx 21 → user 41 -->
+        <div class="page-content"><img src="מעיין גבאי 1.webp"           alt="מעיין גבאי 1"           draggable="false"></div><!-- idx 22 → user 42 -->
+        <div class="page-content"><img src="רחל פלס 2.webp"              alt="רחל פלס 2"              draggable="false"></div><!-- idx 23 → user 39 -->
+        <div class="page-content"><img src="אור בן שמעון 1.webp"         alt="אור בן שמעון 1"         draggable="false"></div><!-- idx 24 → user 40 -->
+        <div class="page-content"><img src="לירון מילר טל 2.webp"        alt="לירון מילר טל 2"        draggable="false"></div><!-- idx 25 → user 37 -->
+        <div class="page-content"><img src="רחל פלס 1.webp"              alt="רחל פלס 1"              draggable="false"></div><!-- idx 26 → user 38 -->
+        <div class="page-content"><img src="הגר פרץ דיין  2.webp"        alt="הגר פרץ דיין 2"         draggable="false"></div><!-- idx 27 → user 35 -->
+        <div class="page-content"><img src="לירון מילר טל 1.webp"        alt="לירון מילר טל 1"        draggable="false"></div><!-- idx 28 → user 36 -->
+        <div class="page-content"><img src="ענת אמזל 2.webp"             alt="ענת אמזל 2"             draggable="false"></div><!-- idx 29 → user 33 -->
+        <div class="page-content"><img src="הגר פרץ דיין  1.webp"        alt="הגר פרץ דיין 1"         draggable="false"></div><!-- idx 30 → user 34 -->
+        <div class="page-content"><img src="יעל סטמטי ליבוביץ 2.webp"   alt="יעל סטמטי ליבוביץ 2"   draggable="false"></div><!-- idx 31 → user 31 -->
+        <div class="page-content"><img src="ענת אמזל 1.webp"             alt="ענת אמזל 1"             draggable="false"></div><!-- idx 32 → user 32 -->
+        <div class="page-content"><img src="ליאת עומסי 2.webp"           alt="ליאת עומסי 2"           draggable="false"></div><!-- idx 33 → user 29 -->
+        <div class="page-content"><img src="יעל סטמטי ליבוביץ 1.webp"   alt="יעל סטמטי ליבוביץ 1"   draggable="false"></div><!-- idx 34 → user 30 -->
+        <div class="page-content"><img src="דפנה בסה 2.webp"             alt="דפנה בסה 2"             draggable="false"></div><!-- idx 35 → user 27 -->
+        <div class="page-content"><img src="ליאת עומסי 1.webp"           alt="ליאת עומסי 1"           draggable="false"></div><!-- idx 36 → user 28 -->
+        <div class="page-content"><img src="אלינה קספרוב 2.webp"         alt="אלינה קספרוב 2"         draggable="false"></div><!-- idx 37 → user 25 -->
+        <div class="page-content"><img src="דפנה בסה 1.webp"             alt="דפנה בסה 1"             draggable="false"></div><!-- idx 38 → user 26 -->
+        <div class="page-content"><img src="אלונה גלוז 2.webp"           alt="אלונה גלוז 2"           draggable="false"></div><!-- idx 39 → user 23 -->
+        <div class="page-content"><img src="אלינה קספרוב 1.webp"         alt="אלינה קספרוב 1"         draggable="false"></div><!-- idx 40 → user 24 -->
+        <div class="page-content"><img src="נלי ברקובי'ץ 2.webp"         alt="נלי ברקובי'ץ 2"         draggable="false"></div><!-- idx 41 → user 21 -->
+        <div class="page-content"><img src="אלונה גלוז 1.webp"           alt="אלונה גלוז 1"           draggable="false"></div><!-- idx 42 → user 22 -->
+        <div class="page-content"><img src="רותי סלובו וקנין 2.webp"     alt="רותי סלובו וקנין 2"     draggable="false"></div><!-- idx 43 → user 19 -->
+        <div class="page-content"><img src="נלי ברקובי'ץ 1.webp"         alt="נלי ברקובי'ץ 1"         draggable="false"></div><!-- idx 44 → user 20 -->
+        <div class="page-content"><img src="מורן שושן 2.webp"            alt="מורן שושן 2"            draggable="false"></div><!-- idx 45 → user 17 -->
+        <div class="page-content"><img src="רותי סלובו וקנין 1.webp"     alt="רותי סלובו וקנין 1"     draggable="false"></div><!-- idx 46 → user 18 -->
+        <div class="page-content"><img src="מוריה אביטל 2.webp"          alt="מוריה אביטל 2"          draggable="false"></div><!-- idx 47 → user 15 -->
+        <div class="page-content"><img src="מורן שושן 1.webp"            alt="מורן שושן 1"            draggable="false"></div><!-- idx 48 → user 16 -->
+        <div class="page-content"><img src="רעות אהרון 2.webp"           alt="רעות אהרון 2"           draggable="false"></div><!-- idx 49 → user 13 -->
+        <div class="page-content"><img src="מוריה אביטל 1.webp"          alt="מוריה אביטל 1"          draggable="false"></div><!-- idx 50 → user 14 -->
+        <div class="page-content"><img src="טלי אורה 2.webp"             alt="טלי אורה 2"             draggable="false"></div><!-- idx 51 → user 11 -->
+        <div class="page-content"><img src="רעות אהרון 1.webp"           alt="רעות אהרון 1"           draggable="false"></div><!-- idx 52 → user 12 -->
+        <div class="page-content"><img src="טלי רם שפירא 2.webp"         alt="טלי רם שפירא 2"         draggable="false"></div><!-- idx 53 → user 9  -->
+        <div class="page-content"><img src="טלי אורה 1.webp"             alt="טלי אורה 1"             draggable="false"></div><!-- idx 54 → user 10 -->
+        <div class="page-content"><img src="נוי שושן 2.webp"             alt="נוי שושן 2"             draggable="false"></div><!-- idx 55 → user 7  -->
+        <div class="page-content"><img src="טלי רם שפירא 1.webp"         alt="טלי רם שפירא 1"         draggable="false"></div><!-- idx 56 → user 8  -->
+        <div class="page-content"><img src="יפעת אשוש 2.webp"            alt="יפעת אשוש 2"            draggable="false"></div><!-- idx 57 → user 5  -->
+        <div class="page-content"><img src="נוי שושן 1.webp"             alt="נוי שושן 1"             draggable="false"></div><!-- idx 58 → user 6  -->
+        <div class="page-content"><img src="שרון פרידמן 2.webp"          alt="שרון פרידמן 2"          draggable="false"></div><!-- idx 59 → user 3  -->
+        <div class="page-content"><img src="יפעת אשוש 1.webp"            alt="יפעת אשוש 1"            draggable="false"></div><!-- idx 60 → user 4  -->
+        <div class="page-content"><img src="דברי פתיחה.webp"             alt="דברי פתיחה"             draggable="false"></div><!-- idx 61 → user 1  -->
+        <div class="page-content"><img src="שרון פרידמן 1.webp"          alt="שרון פרידמן 1"          draggable="false"></div><!-- idx 62 → user 2  -->
+        <div class="page-content"><img src="פתיח.webp"                   alt="פתיח"                   draggable="false"></div><!-- idx 64 → user 0  -->
+        <div class="page-content"><img src="פתיח.webp"                   alt="פתיח"                   draggable="false"></div><!-- idx 65 → user 0  (duplicate cover spread) -->
     </div>
 
     <!--
       MOBILE: sequential order → portrait, 1 page at a time
-      idx: 0=page1(cover) … 24=page25  25=last
-      internalToUser(i) = i  (1:1)
-      flipNext() = forward (LEFT anim) ✓  flipPrev() = backward
+      idx 0=פתיח … idx 63=סיום
     -->
     <div id="mobileFlipbook">
-        <div class="page-content"><img src="page1.webp"  alt="שער"        draggable="false"></div>
-        <div class="page-content"><img src="page2.webp"  alt="עמוד 2"     draggable="false"></div>
-        <div class="page-content"><img src="page3.webp"  alt="עמוד 3"     draggable="false"></div>
-        <div class="page-content"><img src="page4.webp"  alt="עמוד 4"     draggable="false"></div>
-        <div class="page-content"><img src="page5.webp"  alt="עמוד 5"     draggable="false"></div>
-        <div class="page-content"><img src="page6.webp"  alt="עמוד 6"     draggable="false"></div>
-        <div class="page-content"><img src="page7.webp"  alt="עמוד 7"     draggable="false"></div>
-        <div class="page-content"><img src="page8.webp"  alt="עמוד 8"     draggable="false"></div>
-        <div class="page-content"><img src="page9.webp"  alt="עמוד 9"     draggable="false"></div>
-        <div class="page-content"><img src="page10.webp" alt="עמוד 10"    draggable="false"></div>
-        <div class="page-content"><img src="page11.webp" alt="עמוד 11"    draggable="false"></div>
-        <div class="page-content"><img src="page12.webp" alt="עמוד 12"    draggable="false"></div>
-        <div class="page-content"><img src="page13.webp" alt="עמוד 13"    draggable="false"></div>
-        <div class="page-content"><img src="page14.webp" alt="עמוד 14"    draggable="false"></div>
-        <div class="page-content"><img src="page15.webp" alt="עמוד 15"    draggable="false"></div>
-        <div class="page-content"><img src="page16.webp" alt="עמוד 16"    draggable="false"></div>
-        <div class="page-content"><img src="page17.webp" alt="עמוד 17"    draggable="false"></div>
-        <div class="page-content"><img src="page18.webp" alt="עמוד 18"    draggable="false"></div>
-        <div class="page-content"><img src="page19.webp" alt="עמוד 19"    draggable="false"></div>
-        <div class="page-content"><img src="page20.webp" alt="עמוד 20"    draggable="false"></div>
-        <div class="page-content"><img src="page21.webp" alt="עמוד 21"    draggable="false"></div>
-        <div class="page-content"><img src="page22.webp" alt="עמוד 22"    draggable="false"></div>
-        <div class="page-content"><img src="page23.webp" alt="עמוד 23"    draggable="false"></div>
-        <div class="page-content"><img src="page24.webp" alt="עמוד 24"    draggable="false"></div>
-        <div class="page-content"><img src="page25.webp" alt="עמוד 25"    draggable="false"></div>
-        <div class="page-content"><img src="last.webp"   alt="עמוד אחרון" draggable="false"></div>
+        <div class="page-content"><img src="פתיח.webp"                   alt="פתיח"                   draggable="false"></div><!-- 0  -->
+        <div class="page-content"><img src="דברי פתיחה.webp"             alt="דברי פתיחה"             draggable="false"></div><!-- 1  -->
+        <div class="page-content"><img src="שרון פרידמן 1.webp"          alt="שרון פרידמן 1"          draggable="false"></div><!-- 2  -->
+        <div class="page-content"><img src="שרון פרידמן 2.webp"          alt="שרון פרידמן 2"          draggable="false"></div><!-- 3  -->
+        <div class="page-content"><img src="יפעת אשוש 1.webp"            alt="יפעת אשוש 1"            draggable="false"></div><!-- 4  -->
+        <div class="page-content"><img src="יפעת אשוש 2.webp"            alt="יפעת אשוש 2"            draggable="false"></div><!-- 5  -->
+        <div class="page-content"><img src="נוי שושן 1.webp"             alt="נוי שושן 1"             draggable="false"></div><!-- 6  -->
+        <div class="page-content"><img src="נוי שושן 2.webp"             alt="נוי שושן 2"             draggable="false"></div><!-- 7  -->
+        <div class="page-content"><img src="טלי רם שפירא 1.webp"         alt="טלי רם שפירא 1"         draggable="false"></div><!-- 8  -->
+        <div class="page-content"><img src="טלי רם שפירא 2.webp"         alt="טלי רם שפירא 2"         draggable="false"></div><!-- 9  -->
+        <div class="page-content"><img src="טלי אורה 1.webp"             alt="טלי אורה 1"             draggable="false"></div><!-- 10 -->
+        <div class="page-content"><img src="טלי אורה 2.webp"             alt="טלי אורה 2"             draggable="false"></div><!-- 11 -->
+        <div class="page-content"><img src="רעות אהרון 1.webp"           alt="רעות אהרון 1"           draggable="false"></div><!-- 12 -->
+        <div class="page-content"><img src="רעות אהרון 2.webp"           alt="רעות אהרון 2"           draggable="false"></div><!-- 13 -->
+        <div class="page-content"><img src="מוריה אביטל 1.webp"          alt="מוריה אביטל 1"          draggable="false"></div><!-- 14 -->
+        <div class="page-content"><img src="מוריה אביטל 2.webp"          alt="מוריה אביטל 2"          draggable="false"></div><!-- 15 -->
+        <div class="page-content"><img src="מורן שושן 1.webp"            alt="מורן שושן 1"            draggable="false"></div><!-- 16 -->
+        <div class="page-content"><img src="מורן שושן 2.webp"            alt="מורן שושן 2"            draggable="false"></div><!-- 17 -->
+        <div class="page-content"><img src="רותי סלובו וקנין 1.webp"     alt="רותי סלובו וקנין 1"     draggable="false"></div><!-- 18 -->
+        <div class="page-content"><img src="רותי סלובו וקנין 2.webp"     alt="רותי סלובו וקנין 2"     draggable="false"></div><!-- 19 -->
+        <div class="page-content"><img src="נלי ברקובי'ץ 1.webp"         alt="נלי ברקובי'ץ 1"         draggable="false"></div><!-- 20 -->
+        <div class="page-content"><img src="נלי ברקובי'ץ 2.webp"         alt="נלי ברקובי'ץ 2"         draggable="false"></div><!-- 21 -->
+        <div class="page-content"><img src="אלונה גלוז 1.webp"           alt="אלונה גלוז 1"           draggable="false"></div><!-- 22 -->
+        <div class="page-content"><img src="אלונה גלוז 2.webp"           alt="אלונה גלוז 2"           draggable="false"></div><!-- 23 -->
+        <div class="page-content"><img src="אלינה קספרוב 1.webp"         alt="אלינה קספרוב 1"         draggable="false"></div><!-- 24 -->
+        <div class="page-content"><img src="אלינה קספרוב 2.webp"         alt="אלינה קספרוב 2"         draggable="false"></div><!-- 25 -->
+        <div class="page-content"><img src="דפנה בסה 1.webp"             alt="דפנה בסה 1"             draggable="false"></div><!-- 26 -->
+        <div class="page-content"><img src="דפנה בסה 2.webp"             alt="דפנה בסה 2"             draggable="false"></div><!-- 27 -->
+        <div class="page-content"><img src="ליאת עומסי 1.webp"           alt="ליאת עומסי 1"           draggable="false"></div><!-- 28 -->
+        <div class="page-content"><img src="ליאת עומסי 2.webp"           alt="ליאת עומסי 2"           draggable="false"></div><!-- 29 -->
+        <div class="page-content"><img src="יעל סטמטי ליבוביץ 1.webp"   alt="יעל סטמטי ליבוביץ 1"   draggable="false"></div><!-- 30 -->
+        <div class="page-content"><img src="יעל סטמטי ליבוביץ 2.webp"   alt="יעל סטמטי ליבוביץ 2"   draggable="false"></div><!-- 31 -->
+        <div class="page-content"><img src="ענת אמזל 1.webp"             alt="ענת אמזל 1"             draggable="false"></div><!-- 32 -->
+        <div class="page-content"><img src="ענת אמזל 2.webp"             alt="ענת אמזל 2"             draggable="false"></div><!-- 33 -->
+        <div class="page-content"><img src="הגר פרץ דיין  1.webp"        alt="הגר פרץ דיין 1"         draggable="false"></div><!-- 34 -->
+        <div class="page-content"><img src="הגר פרץ דיין  2.webp"        alt="הגר פרץ דיין 2"         draggable="false"></div><!-- 35 -->
+        <div class="page-content"><img src="לירון מילר טל 1.webp"        alt="לירון מילר טל 1"        draggable="false"></div><!-- 36 -->
+        <div class="page-content"><img src="לירון מילר טל 2.webp"        alt="לירון מילר טל 2"        draggable="false"></div><!-- 37 -->
+        <div class="page-content"><img src="רחל פלס 1.webp"              alt="רחל פלס 1"              draggable="false"></div><!-- 38 -->
+        <div class="page-content"><img src="רחל פלס 2.webp"              alt="רחל פלס 2"              draggable="false"></div><!-- 39 -->
+        <div class="page-content"><img src="אור בן שמעון 1.webp"         alt="אור בן שמעון 1"         draggable="false"></div><!-- 40 -->
+        <div class="page-content"><img src="אור בן שמעון 2.webp"         alt="אור בן שמעון 2"         draggable="false"></div><!-- 41 -->
+        <div class="page-content"><img src="מעיין גבאי 1.webp"           alt="מעיין גבאי 1"           draggable="false"></div><!-- 42 -->
+        <div class="page-content"><img src="מעיין גבאי 2.webp"           alt="מעיין גבאי 2"           draggable="false"></div><!-- 43 -->
+        <div class="page-content"><img src="אילנית כהן 1.webp"           alt="אילנית כהן 1"           draggable="false"></div><!-- 44 -->
+        <div class="page-content"><img src="אילנית כהן 2.webp"           alt="אילנית כהן 2"           draggable="false"></div><!-- 45 -->
+        <div class="page-content"><img src="טינה טנוס 1.webp"            alt="טינה טנוס 1"            draggable="false"></div><!-- 46 -->
+        <div class="page-content"><img src="טינה טנוס 2.webp"            alt="טינה טנוס 2"            draggable="false"></div><!-- 47 -->
+        <div class="page-content"><img src="רננה לנדאו 1.webp"           alt="רננה לנדאו 1"           draggable="false"></div><!-- 48 -->
+        <div class="page-content"><img src="רננה לנדאו 2.webp"           alt="רננה לנדאו 2"           draggable="false"></div><!-- 49 -->
+        <div class="page-content"><img src="גל אביטל 1.webp"             alt="גל אביטל 1"             draggable="false"></div><!-- 50 -->
+        <div class="page-content"><img src="גל אביטל 2.webp"             alt="גל אביטל 2"             draggable="false"></div><!-- 51 -->
+        <div class="page-content"><img src="ליז עמר שמיאן 1.webp"        alt="ליז עמר שמיאן 1"        draggable="false"></div><!-- 52 -->
+        <div class="page-content"><img src="ליז עמר שמיאן 2.webp"        alt="ליז עמר שמיאן 2"        draggable="false"></div><!-- 53 -->
+        <div class="page-content"><img src="ג'ויה אור 1.webp"            alt="ג'ויה אור 1"            draggable="false"></div><!-- 54 -->
+        <div class="page-content"><img src="ג'ויה אור 2.webp"            alt="ג'ויה אור 2"            draggable="false"></div><!-- 55 -->
+        <div class="page-content"><img src="סופי כהן 1.webp"             alt="סופי כהן 1"             draggable="false"></div><!-- 56 -->
+        <div class="page-content"><img src="סופי כהן 2.webp"             alt="סופי כהן 2"             draggable="false"></div><!-- 57 -->
+        <div class="page-content"><img src="זיו זוארץ 1.webp"            alt="זיו זוארץ 1"            draggable="false"></div><!-- 58 -->
+        <div class="page-content"><img src="זיו זוארץ 2.webp"            alt="זיו זוארץ 2"            draggable="false"></div><!-- 59 -->
+        <div class="page-content"><img src="מירי שובבו 1.webp"           alt="מירי שובבו 1"           draggable="false"></div><!-- 60 -->
+        <div class="page-content"><img src="מירי שובבו 2.webp"           alt="מירי שובבו 2"           draggable="false"></div><!-- 61 -->
+        <div class="page-content"><img src="תודות.webp"                  alt="תודות"                  draggable="false"></div><!-- 62 -->
+        <div class="page-content"><img src="סיום.webp"                   alt="סיום"                   draggable="false"></div><!-- 63 -->
     </div>
 
 </div>
@@ -422,27 +692,47 @@
     var mItems        = document.querySelectorAll('.menu-page-item');
 
     /* ── Constants ── */
-    var TOTAL = 26;
-    var LAST  = TOTAL - 1; // = 25
+    var TOTAL        = 64;   // user-facing pages (same for mobile)
+    var LAST         = TOTAL - 1; // = 63  (mobile)
+    var LAST_DESKTOP = 65;        // desktop internal pages = 66
 
     /*
-      DESKTOP: reversed + pairs swapped (26 pages).
-        flipPrev() = lower idx = user FORWARD.  flipNext() = user BACKWARD.
-        D_MAP[user] = internal (self-inverse):
-        [25,23,24,21,22,19,20,17,18,15,16,13,14,11,12,9,10,7,8,5,6,3,4,1,2,0]
+      DESKTOP: 66 internal pages, showCover:false.
+        Spread (64,65) = פתיח|פתיח (front).  Spread (0,1) = סיום|סיום (back).
+        Content pages (user 1-62) → internal 2-63 (reversed+swapped, shifted +1).
+        flipPrev() = FORWARD (lower idx).  flipNext() = BACKWARD.
 
-      MOBILE: sequential order (idx 0=cover … idx 25=last), startPage:0.
-        flipNext() = higher idx = user FORWARD  → animation flies LEFT ✓
-        flipPrev() = lower  idx = user BACKWARD → animation flies RIGHT ✓
-        internalToUser(i) = i  (1:1)
+      D_MAP_ITU: internal→user (66 entries) = [63] + old_64_D_MAP + [0]
+      D_MAP_UTI: user→internal (64 entries)
+        user 0  → 64
+        user 1-62 → old_D_MAP[j]+1
+        user 63 → 1
+
+      MOBILE: sequential order, idx 0=פתיח … idx 63=סיום.
     */
-    var D_MAP = [25,23,24,21,22,19,20,17,18,15,16,13,14,11,12,9,10,7,8,5,6,3,4,1,2,0]; // self-inverse
+    var D_MAP_ITU = [
+        63,
+        63,61,62,59,60,57,58,55,56,53,54,51,52,49,50,47,48,45,46,43,
+        44,41,42,39,40,37,38,35,36,33,34,31,32,29,30,27,28,25,26,23,
+        24,21,22,19,20,17,18,15,16,13,14,11,12, 9,10, 7, 8, 5, 6, 3,
+         4, 1, 2, 0,
+        0
+    ]; // 66 entries: [0]=63(dup), [1-64]=old D_MAP, [65]=0(dup)
+
+    var D_MAP_UTI = [
+        64,
+        62,63,60,61,58,59,56,57,54,55,52,53,50,51,48,49,46,47,44,45,
+        42,43,40,41,38,39,36,37,34,35,32,33,30,31,28,29,26,27,24,25,
+        22,23,20,21,18,19,16,17,14,15,12,13,10,11, 8, 9, 6, 7, 4, 5,
+         2, 3, 1
+    ]; // 64 entries: [0]=64, [1-62]=old+1, [63]=1
 
     /* ── State ── */
-    var currentPage = 0;
-    var desktopFlip = null;
-    var mobileFlip  = null;
-    var isMobile    = window.innerWidth <= 768;
+    var currentPage     = 0;
+    var desktopFlip     = null;
+    var mobilePages     = null;
+    var mobileAnimating = false;
+    var isMobile        = window.innerWidth <= 768;
 
     /* ════════════════════════════════════════
        SHARED UI
@@ -474,22 +764,22 @@
     /* ════════════════════════════════════════
        NAVIGATION
        Desktop: flipPrev()=forward (reversed array), flipNext()=backward
-       Mobile:  flipNext()=forward (sequential, LEFT anim), flipPrev()=backward
+       Mobile:  mobileGoTo() — CSS slide LEFT for all transitions
     ════════════════════════════════════════ */
 
     function forward() {
-        if (isMobile) { if (mobileFlip)  mobileFlip.flipNext(); }  // LEFT anim ✓
-        else           { if (desktopFlip) desktopFlip.flipPrev(); } // reversed array
+        if (isMobile) { mobileGoTo(currentPage + 1); }
+        else           { if (desktopFlip) desktopFlip.flipPrev(); }
     }
     function backward() {
-        if (isMobile) { if (mobileFlip)  mobileFlip.flipPrev(); }
+        if (isMobile) { mobileGoTo(currentPage - 1); }
         else           { if (desktopFlip) desktopFlip.flipNext(); }
     }
 
     function goToPage(pg) {
         if (pg < 0 || pg >= TOTAL) return;
-        if (isMobile) { if (mobileFlip)  mobileFlip.flip(pg);        } // sequential 1:1
-        else           { if (desktopFlip) desktopFlip.flip(D_MAP[pg]); }
+        if (isMobile) { mobileGoTo(pg); }
+        else           { if (desktopFlip) desktopFlip.flip(D_MAP_UTI[pg]); }
     }
 
     /* ════════════════════════════════════════
@@ -514,32 +804,31 @@
         desktopFlip = new St.PageFlip(desktopEl, {
             width: s.width, height: s.height, size: 'fixed',
             minWidth: 180, maxWidth: 650, minHeight: 250, maxHeight: 950,
-            showCover: true, usePortrait: false,
+            showCover: false, usePortrait: false,
             maxShadowOpacity: 0.5, mobileScrollSupport: false,
             clickEventForward: true, useMouseEvents: true,
             swipeDistance: 30, showPageCorners: true,
             disableFlipByClick: false, flippingTime: 700,
             startZIndex: 0, autoSize: false, drawShadow: true,
-            startPage: LAST   /* cover at internal idx 7 */
+            startPage: LAST_DESKTOP
         });
         desktopFlip.loadFromHTML(desktopEl.querySelectorAll('.page-content'));
 
-        if (prev > 0) setTimeout(function () { desktopFlip.flip(D_MAP[prev]); }, 100);
+        if (prev > 0) setTimeout(function () { desktopFlip.flip(D_MAP_UTI[prev]); }, 100);
 
-        function onFlip() { updateUI(D_MAP[desktopFlip.getCurrentPageIndex()]); }
+        function onFlip() { updateUI(D_MAP_ITU[desktopFlip.getCurrentPageIndex()]); }
         desktopFlip.on('flip', onFlip);
         desktopFlip.on('changeState', onFlip);
         updateUI(prev);
     }
 
     /* ════════════════════════════════════════
-       MOBILE FLIPBOOK
-       Portrait (1 page), sequential order, showCover:false, all-soft pages
-       startPage: 0 (cover at idx 0) — fixes createSpread crash
-       flipNext() = forward  (LEFT animation) ✓
-       flipPrev() = backward (RIGHT animation)
-       Tap LEFT  → forward  (flipNext, animates LEFT)
-       Tap RIGHT → backward (flipPrev, animates RIGHT)
+       MOBILE: CSS slide viewer
+       Sequential order (idx 0=פתיח … idx 63=סיום).
+       Always slides LEFT — new page enters from right (+100%), old exits to left (-100%).
+       Works identically for both forward and backward navigation.
+       Tap RIGHT → backward  |  Tap LEFT → forward
+       Swipe LEFT → forward  |  Swipe RIGHT → backward
     ════════════════════════════════════════ */
 
     function mobileSize() {
@@ -551,61 +840,92 @@
 
     function initMobile() {
         var prev = currentPage;
-        if (mobileFlip) { mobileFlip.destroy(); mobileFlip = null; }
+        mobilePages = Array.prototype.slice.call(mobileEl.querySelectorAll('.page-content'));
         var s = mobileSize();
 
-        mobileFlip = new St.PageFlip(mobileEl, {
-            width: s.width, height: s.height, size: 'fixed',
-            minWidth: 150, maxWidth: 500, minHeight: 200, maxHeight: 900,
-            showCover: false, usePortrait: true,
-            maxShadowOpacity: 0.4, mobileScrollSupport: false,
-            clickEventForward: false, useMouseEvents: false, /* we handle touch manually */
-            swipeDistance: 999, showPageCorners: false,
-            disableFlipByClick: true,
-            flippingTime: 900,  /* slower, smoother */
-            startZIndex: 0, autoSize: false, drawShadow: true,
-            startPage: 0   /* sequential: cover at idx 0 */
+        mobileEl.style.width    = s.width  + 'px';
+        mobileEl.style.height   = s.height + 'px';
+        mobileEl.style.position = 'relative';
+        mobileEl.style.overflow = 'hidden';
+
+        mobilePages.forEach(function (page, i) {
+            page.style.position   = 'absolute';
+            page.style.width      = s.width  + 'px';
+            page.style.height     = s.height + 'px';
+            page.style.top        = '0';
+            page.style.left       = '0';
+            page.style.transition = '';
+            page.style.transform  = 'translateX(0)';
+            page.style.display    = (i === prev) ? 'block' : 'none';
+            page.style.boxShadow  = '0 2px 20px rgba(0,0,0,0.12)';
         });
-        mobileFlip.loadFromHTML(mobileEl.querySelectorAll('.page-content'));
 
-        if (prev > 0) setTimeout(function () { mobileFlip.flip(prev); }, 100);
-
-        function onFlip() { updateUI(mobileFlip.getCurrentPageIndex()); }
-        mobileFlip.on('flip', onFlip);
-        mobileFlip.on('changeState', onFlip);
+        mobileAnimating = false;
         updateUI(prev);
     }
 
-    /* ── Mobile tap zones (on viewport so library can't steal the event) ── */
-    (function () {
-        var startX = 0, startY = 0, wasDrag = false;
+    function mobileGoTo(newIdx) {
+        if (!mobilePages || mobileAnimating) return;
+        if (newIdx < 0 || newIdx >= TOTAL) return;
+        if (newIdx === currentPage) return;
 
-        /* capture:true → we run before any library handler */
+        mobileAnimating = true;
+        var prevIdx  = currentPage;
+        var outgoing = mobilePages[prevIdx];
+        var incoming = mobilePages[newIdx];
+        var duration = 400;
+
+        /* always slide LEFT: new page enters from right, old exits to left */
+        incoming.style.transition = 'none';
+        incoming.style.transform  = 'translateX(100%)';
+        incoming.style.display    = 'block';
+        incoming.getBoundingClientRect(); // force reflow before transition starts
+
+        outgoing.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.4,0,0.2,1)';
+        incoming.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.4,0,0.2,1)';
+        outgoing.style.transform  = 'translateX(-100%)';
+        incoming.style.transform  = 'translateX(0)';
+
+        updateUI(newIdx);
+
+        setTimeout(function () {
+            mobilePages[prevIdx].style.display    = 'none';
+            mobilePages[prevIdx].style.transform  = '';
+            mobilePages[prevIdx].style.transition = '';
+            mobileAnimating = false;
+        }, duration + 20);
+    }
+
+    /* ── Mobile touch: tap zones + swipe ── */
+    (function () {
+        var startX = 0, startY = 0;
+
         viewport.addEventListener('touchstart', function (e) {
             if (!isMobile) return;
-            startX  = e.touches[0].clientX;
-            startY  = e.touches[0].clientY;
-            wasDrag = false;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
         }, { passive: true, capture: true });
 
-        viewport.addEventListener('touchmove', function (e) {
-            if (!isMobile) return;
-            if (Math.abs(e.touches[0].clientX - startX) > 12 ||
-                Math.abs(e.touches[0].clientY - startY) > 12) wasDrag = true;
-        }, { passive: true, capture: true });
-
-        /* passive:false → preventDefault stops ghost 'click' from firing */
+        /* passive:false → preventDefault stops ghost click */
         viewport.addEventListener('touchend', function (e) {
-            if (!isMobile || wasDrag || !mobileFlip) return;
+            if (!isMobile || mobileAnimating) return;
             e.preventDefault();
-            var rect = mobileEl.getBoundingClientRect();
-            var x    = e.changedTouches[0].clientX - rect.left;
-            if (x > rect.width / 2) {
-                /* right → backward */
-                if (currentPage > 0) mobileFlip.flipPrev();
-            } else {
-                /* left → forward */
-                if (currentPage < LAST) mobileFlip.flipNext();
+
+            var deltaX = e.changedTouches[0].clientX - startX;
+            var deltaY = e.changedTouches[0].clientY - startY;
+            var absDX  = Math.abs(deltaX);
+            var absDY  = Math.abs(deltaY);
+
+            if (absDX > 40 && absDX > absDY * 1.2) {
+                /* horizontal swipe */
+                if (deltaX < 0) mobileGoTo(currentPage + 1); // swipe left  → forward
+                else             mobileGoTo(currentPage - 1); // swipe right → backward
+            } else if (absDX < 15 && absDY < 15) {
+                /* tap */
+                var rect = mobileEl.getBoundingClientRect();
+                var x    = e.changedTouches[0].clientX - rect.left;
+                if (x > rect.width / 2) mobileGoTo(currentPage - 1); // tap right → backward
+                else                     mobileGoTo(currentPage + 1); // tap left  → forward
             }
         }, { passive: false, capture: true });
     })();
@@ -657,7 +977,7 @@
                 if (!was && desktopFlip) { desktopFlip.destroy(); desktopFlip = null; }
                 initMobile();
             } else {
-                if (was && mobileFlip) { mobileFlip.destroy(); mobileFlip = null; }
+                mobilePages = null;
                 initDesktop();
             }
         }, 200);
