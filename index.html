@@ -436,11 +436,11 @@
             <div class="menu-page-thumb"><img src="מירי שובבו 2.webp" alt="מירי שובבו כתבה"></div>
             <div class="menu-page-info"><div class="page-name">מירי שובבו כתבה</div><div class="page-number">עמוד 62</div></div>
         </div>
-        <div class="menu-page-item" data-page="62">
+        <div class="menu-page-item full-width" data-page="62">
             <div class="menu-page-thumb"><img src="תודות.webp" alt="תודות"></div>
             <div class="menu-page-info"><div class="page-name">תודות</div><div class="page-number">עמוד 63</div></div>
         </div>
-        <div class="menu-page-item" data-page="63">
+        <div class="menu-page-item full-width" data-page="63">
             <div class="menu-page-thumb"><img src="סיום.webp" alt="סיום"></div>
             <div class="menu-page-info"><div class="page-name">סיום</div><div class="page-number">עמוד 64</div></div>
         </div>
@@ -733,8 +733,6 @@
         var r = 0.707, vpW = viewport.offsetWidth, vpH = viewport.offsetHeight;
         var pH = vpH - 40, pW = pH * r;
         if (pW * 2 > vpW - 60) { pW = (vpW - 60) / 2; pH = pW / r; }
-        pW = Math.min(pW, 480);
-        pH = Math.min(pH, pW / r);
         return { width: Math.floor(pW), height: Math.floor(pH) };
     }
 
