@@ -149,6 +149,41 @@
         }
         .page-dot.active { background: #1a6b4a; width: 16px; border-radius: 3px; }
 
+        /* ===== FULLSCREEN button ===== */
+        .fullscreen-btn {
+            display: flex; align-items: center; gap: 6px;
+            padding: 0 14px; height: 36px; border-radius: 18px;
+            border: none; background: #1a6b4a; color: #fff;
+            font-size: 13px; font-weight: 700; font-family: inherit;
+            cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(26,107,74,0.35);
+        }
+        .fullscreen-btn:hover { background: #155a3c; box-shadow: 0 3px 12px rgba(26,107,74,0.45); }
+        .fullscreen-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+        .fullscreen-btn .icon-exit { display: none; }
+        .fullscreen-btn.active .icon-enter { display: none; }
+        .fullscreen-btn.active .icon-exit  { display: block; }
+
+        /* exit button floating on viewport in fullscreen */
+        .fs-exit-btn {
+            display: none;
+            position: fixed; top: 14px; left: 14px; z-index: 2000;
+            align-items: center; gap: 6px;
+            padding: 0 14px; height: 36px; border-radius: 18px;
+            border: none; background: rgba(26,107,74,0.9); color: #fff;
+            font-size: 13px; font-weight: 700; font-family: inherit;
+            cursor: pointer; backdrop-filter: blur(8px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        }
+        .fs-exit-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+        body.is-fullscreen .fs-exit-btn { display: flex; }
+
+        /* ===== FULLSCREEN mode ===== */
+        body.is-fullscreen .nav-bar,
+        body.is-fullscreen .bottom-bar { display: none !important; }
+        body.is-fullscreen .book-viewport { top: 0 !important; bottom: 0 !important; }
+        #flipbook { transform-origin: center center; transition: transform 0.3s ease; }
+
         /* ===== MOBILE overrides ===== */
         @media (max-width: 768px) {
             .nav-bar        { height: 56px; }
@@ -159,6 +194,7 @@
             .menu-panel     { width: 280px; }
             #flipbook        { display: none !important; }
             #mobileFlipbook  { display: block; }
+            .fullscreen-btn  { display: none !important; }
         }
     </style>
 </head>
@@ -171,9 +207,22 @@
             <span></span><span></span><span></span>
         </button>
         <img src="logo.webp" alt="אלטשולר שחם" class="nav-logo-img">
-        <div class="nav-page-counter" id="navCounter"></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <div class="nav-page-counter" id="navCounter"></div>
+            <button class="fullscreen-btn" id="fullscreenBtn" aria-label="מסך מלא">
+                <svg class="icon-enter" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                <svg class="icon-exit" viewBox="0 0 24 24"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="10" y1="14" x2="3" y2="21"></line><line x1="21" y1="3" x2="14" y2="10"></line></svg>
+                <span id="fsBtnText">מסך מלא</span>
+            </button>
+        </div>
     </div>
 </nav>
+
+<!-- FULLSCREEN EXIT BUTTON -->
+<button class="fs-exit-btn" id="fsExitBtn">
+    <svg viewBox="0 0 24 24"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="10" y1="14" x2="3" y2="21"></line><line x1="21" y1="3" x2="14" y2="10"></line></svg>
+    יציאה ממסך מלא
+</button>
 
 <!-- SIDE MENU -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -631,6 +680,7 @@
     var mOverlay      = document.getElementById('menuOverlay');
     var mPanel        = document.getElementById('menuPanel');
     var hBtn          = document.getElementById('hamburgerBtn');
+    var fsBtn         = document.getElementById('fullscreenBtn');
     var mItems        = document.querySelectorAll('.menu-page-item');
 
     /* ── Constants ── */
@@ -731,8 +781,8 @@
 
     function desktopSize() {
         var r = 0.707, vpW = viewport.offsetWidth, vpH = viewport.offsetHeight;
-        var pH = vpH - 40, pW = pH * r;
-        if (pW * 2 > vpW - 60) { pW = (vpW - 60) / 2; pH = pW / r; }
+        var pH = vpH - 10, pW = pH * r;
+        if (pW * 2 > vpW - 10) { pW = (vpW - 10) / 2; pH = pW / r; }
         return { width: Math.floor(pW), height: Math.floor(pH) };
     }
 
@@ -898,6 +948,38 @@
 
     function openMenu()  { mPanel.classList.add('open');    mOverlay.classList.add('open');    hBtn.classList.add('open');    }
     function closeMenu() { mPanel.classList.remove('open'); mOverlay.classList.remove('open'); hBtn.classList.remove('open'); }
+
+    /* ── Fullscreen ── */
+    var fsExitBtn  = document.getElementById('fsExitBtn');
+    var fsBtnText  = document.getElementById('fsBtnText');
+    if (fsBtn) {
+        var fsActive = false;
+
+        function applyFullscreen(active) {
+            fsActive = active;
+            fsBtn.classList.toggle('active', active);
+            document.body.classList.toggle('is-fullscreen', active);
+            if (fsBtnText) fsBtnText.textContent = active ? 'צא ממסך מלא' : 'מסך מלא';
+            setTimeout(function () {
+                if (!isMobile && desktopFlip) {
+                    if (active) {
+                        var fullW = window.innerWidth;
+                        var fullH = window.innerHeight;
+                        var bookW = desktopEl.offsetWidth;
+                        var bookH = desktopEl.offsetHeight;
+                        var scaleW = (fullW - 40) / bookW;
+                        var scaleH = (fullH - 40) / bookH;
+                        desktopEl.style.transform = 'scale(' + Math.min(scaleW, scaleH) + ')';
+                    } else {
+                        desktopEl.style.transform = '';
+                    }
+                }
+            }, 60);
+        }
+
+        fsBtn.addEventListener('click', function () { applyFullscreen(!fsActive); });
+        if (fsExitBtn) fsExitBtn.addEventListener('click', function () { applyFullscreen(false); });
+    }
 
     mItems.forEach(function (item) {
         item.addEventListener('click', function () {
