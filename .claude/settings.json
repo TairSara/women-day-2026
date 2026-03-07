@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"c:\\\\Users\\\\tairt\\\\Downloads\\\\new\\\\women-day-2026\"\" | grep -i \"נוי \")",
+      "Bash(ls /c/Users/tairt/Downloads/new/*.webp)"
+    ]
+  }
+}
